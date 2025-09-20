@@ -10,10 +10,10 @@ export default function Navbar() {
   const [isClient, setIsClient] = useState(false)
   const [pathname, setPathname] = useState('')
   
-  // Ensure consistent href for login - always use /login to avoid hydration mismatch
+  // Ensure consistent href for student login - always use /student-login to avoid hydration mismatch
   // This must be consistent between server and client to prevent hydration errors
   // Never change this based on pathname or user state to prevent hydration mismatches
-  const loginHref = '/login'
+  const studentLoginHref = '/student-login'
 
   useEffect(() => {
     setIsClient(true)
@@ -112,7 +112,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Link 
               key="student-login-desktop"
-              href={loginHref} 
+              href={studentLoginHref} 
               className="rounded-xl px-4 py-2 text-sm font-medium transition-all duration-300 hover:scale-105 text-slate-700 hover:text-blue-600 dark:text-slate-300 dark:hover:text-blue-400 whitespace-nowrap"
             >
               Student Login
@@ -206,7 +206,7 @@ export default function Navbar() {
             <div className="pt-4 border-t border-slate-200/50 dark:border-slate-700/50">
               <Link 
                 key="student-login-mobile"
-                href={loginHref} 
+                href={studentLoginHref} 
                 className="block rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 text-slate-700 hover:text-blue-600 hover:bg-blue-50 dark:text-slate-300 dark:hover:text-blue-400 dark:hover:bg-slate-800"
                 onClick={closeMobileMenu}
               >
