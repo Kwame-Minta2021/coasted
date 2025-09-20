@@ -60,17 +60,17 @@ const teamMembers = [
     github: '#',
     email: 'Linda.Essilfie@acity.edu.gh'
   },
-  {
-    name: 'Yaw Darko',
-    role: 'Operations & School Partnerships',
-    image: '/team/images/yaw.jpg',
-    bio: 'Business development expert building partnerships with schools and organizations across Ghana.',
-    expertise: ['Partnership Development', 'Operations Management', 'Business Strategy', 'Community Outreach'],
-    education: 'MBA Business Administration, GIMPA',
-    linkedin: '#',
-    github: '#',
-    email: 'yaw@coastedcode.org'
-  }
+    {
+      name: 'Albert Essilfie',
+      role: 'Industrial and Partner Relations',
+      image: '/team/images/Albert.jpg', // Using placeholder image until Albert.jpg is available
+      bio: 'Systems Engineer with a passion for building partnerships with schools and organizations across Ghana.',
+      expertise: ['Operations Management', 'Business Strategy', 'Community Outreach'],
+      education: 'Masters in Systems Engineering,GWU(USA)',
+      linkedin: '#',
+      github: '#',
+      email: 'albertessilfie71@gmail.com'
+    }
 ]
 
 const containerVariants = {
@@ -153,32 +153,19 @@ export default function TeamPage() {
 
       {/* Team Members Grid */}
       <Section>
-        <motion.div 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 mb-4">
             The People Behind Coasted Code
           </h2>
           <p className="text-lg text-muted-foreground transition-colors duration-300">
             Meet our diverse team of educators, engineers, and innovators
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-        >
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {teamMembers.map((member, index) => (
-            <motion.div
+            <div
               key={member.name}
-              variants={itemVariants}
               className="group"
             >
               <div className="cc-card p-6 transition-all duration-300 hover:scale-105 hover:shadow-xl">
@@ -192,6 +179,11 @@ export default function TeamPage() {
                       fill
                       sizes="128px"
                       priority={false}
+                      loading="lazy"
+                      onError={(e) => {
+                        console.error('Image failed to load:', member.image);
+                        e.currentTarget.src = '/team/images/Fred.png'; // Fallback image
+                      }}
                     />
                   </div>
                 </div>
@@ -262,9 +254,9 @@ export default function TeamPage() {
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </Section>
 
       {/* Values Section */}
