@@ -13,6 +13,7 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
+  const [isClient, setIsClient] = useState(false);
   const { signIn, user } = useAuth();
   const router = useRouter();
 
@@ -49,9 +50,14 @@ export default function LoginPage() {
     }
   };
 
+  // Set client-side flag to prevent hydration mismatch
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   // If user is already signed in, redirect to student dashboard
   useEffect(() => {
-    if (user) {
+    if (isClient && user) {
       // Use setTimeout to defer navigation until after the current render cycle
       const timeoutId = setTimeout(() => {
         router.push('/student');
@@ -59,15 +65,17 @@ export default function LoginPage() {
       
       return () => clearTimeout(timeoutId);
     }
-  }, [user, router]);
+  }, [isClient, user, router]);
 
-  // Show loading while redirecting
-  if (user) {
+  // Show loading while redirecting - only check user state after client-side hydration
+  if (isClient && user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-violet-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-slate-600 dark:text-slate-400">Redirecting to dashboard...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 relative overflow-hidden">
+        <div className="relative min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-slate-600 dark:text-slate-400">Redirecting to dashboard...</p>
+          </div>
         </div>
       </div>
     );

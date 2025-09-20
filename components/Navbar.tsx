@@ -1,7 +1,6 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { usePathname } from 'next/navigation'
 import Logo from './Logo'
 import ThemeToggle from './ThemeToggle'
 import { Menu, X } from 'lucide-react'
@@ -9,7 +8,7 @@ import { Menu, X } from 'lucide-react'
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isClient, setIsClient] = useState(false)
-  const pathname = usePathname()
+  const [pathname, setPathname] = useState('')
   
   // Ensure consistent href for login - always use /login to avoid hydration mismatch
   // This must be consistent between server and client to prevent hydration errors
@@ -18,6 +17,9 @@ export default function Navbar() {
 
   useEffect(() => {
     setIsClient(true)
+    // Set pathname only on client side to prevent hydration mismatch
+    const currentPath = window.location.pathname
+    setPathname(currentPath)
   }, [])
 
   const toggleMobileMenu = () => {
