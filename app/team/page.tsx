@@ -1,6 +1,5 @@
 'use client'
 
-import { motion } from 'framer-motion'
 import Section from '@/components/Section'
 import Image from 'next/image'
 
@@ -73,26 +72,6 @@ const teamMembers = [
     }
 ]
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.5
-    }
-  }
-}
 
 export default function TeamPage() {
   return (
@@ -103,43 +82,22 @@ export default function TeamPage() {
         <div className="pointer-events-none absolute -right-20 top-1/3 h-72 w-72 rounded-full bg-emerald-200/60 blur-3xl dark:bg-emerald-900/30 transition-colors duration-300" />
         
         <div className="text-center">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl transition-colors duration-300"
-          >
+          <h1 className="text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl transition-colors duration-300">
             Meet Our Team
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="mt-4 text-lg text-muted-foreground transition-colors duration-300 max-w-3xl mx-auto"
-          >
+          </h1>
+          <p className="mt-4 text-lg text-muted-foreground transition-colors duration-300 max-w-3xl mx-auto">
             Passionate educators, engineers, and innovators dedicated to inspiring the next generation of tech leaders in Ghana.
-          </motion.p>
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="mt-6 flex justify-center gap-4"
-          >
+          </p>
+          <div className="mt-6 flex justify-center gap-4">
             <div className="cc-btn-primary cc-cta-ring">Join Our Team</div>
             <div className="cc-btn-outline">Partner With Us</div>
-          </motion.div>
+          </div>
         </div>
       </Section>
 
       {/* Mission Statement */}
       <Section className="bg-card transition-colors duration-300">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center max-w-4xl mx-auto"
-        >
+        <div className="text-center max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 mb-6">
             Our Mission
           </h2>
@@ -148,7 +106,7 @@ export default function TeamPage() {
             confidence, and creativity to become the innovators and problem-solvers of tomorrow. We believe 
             every child deserves the opportunity to explore, create, and build with technology.
           </p>
-        </motion.div>
+        </div>
       </Section>
 
       {/* Team Members Grid */}
@@ -261,28 +219,16 @@ export default function TeamPage() {
 
       {/* Values Section */}
       <Section className="bg-card transition-colors duration-300">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
+        <div className="text-center mb-12">
           <h2 className="text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 mb-4">
             Our Values
           </h2>
           <p className="text-lg text-muted-foreground transition-colors duration-300">
             The principles that guide everything we do
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid gap-8 md:grid-cols-2 lg:grid-cols-4"
-        >
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {[
             {
               icon: '🎯',
@@ -305,9 +251,8 @@ export default function TeamPage() {
               description: 'Our love for teaching and technology drives us to inspire the next generation of innovators.'
             }
           ].map((value, index) => (
-            <motion.div
+            <div
               key={value.title}
-              variants={itemVariants}
               className="text-center"
             >
               <div className="text-4xl mb-4">{value.icon}</div>
@@ -317,20 +262,14 @@ export default function TeamPage() {
               <p className="text-muted-foreground transition-colors duration-300">
                 {value.description}
               </p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </Section>
 
       {/* Join Us CTA */}
       <Section>
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="cc-card p-8 text-center"
-        >
+        <div className="cc-card p-8 text-center">
           <h2 className="text-3xl font-bold tracking-tight text-foreground transition-colors duration-300 mb-4">
             Join Our Mission
           </h2>
@@ -342,7 +281,7 @@ export default function TeamPage() {
             <a href="#contact" className="cc-btn-primary cc-cta-ring">Apply to Join Our Team</a>
             <a href="#contact" className="cc-btn-outline">Partner With Us</a>
           </div>
-        </motion.div>
+        </div>
       </Section>
     </main>
   )
