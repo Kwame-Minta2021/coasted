@@ -14,7 +14,8 @@ export default function LoginPage() {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [isClient, setIsClient] = useState(false);
-  const [userType, setUserType] = useState<'student' | 'admin' | 'instructor' | 'guardian'>('student');
+  // Only students use this login page
+  const userType = 'student';
   const { signIn, user } = useAuth();
   const router = useRouter();
 
@@ -25,73 +26,21 @@ export default function LoginPage() {
     setMessage('');
 
     try {
-      console.log('Attempting login with:', email, 'as', userType);
+      console.log('Attempting student login with:', email);
+      // Use Supabase Auth for students
+      const { user, error } = await signIn(email, password);
       
-      if (userType === 'student') {
-        // Use Supabase Auth for students
-        const { user, error } = await signIn(email, password);
-        
-        console.log('Student login result:', { user: user?.email, error: error?.message });
-        
-        if (error) {
-          console.log('Student login failed with error:', error.message);
-          setError(error.message || 'Login failed. Please try again.');
-        } else if (user) {
-          console.log('Student login successful, redirecting...');
-          setMessage('Login successful! Redirecting...');
-          
-          setTimeout(() => {
-            router.push('/student');
-          }, 1000);
-        }
-      } else if (userType === 'admin') {
-        // Admin authentication
-        const response = await fetch('/api/admin/auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          localStorage.setItem('adminToken', data.token);
-          localStorage.setItem('adminUser', JSON.stringify(data.admin));
-          setMessage('Admin login successful! Redirecting...');
-          
-          setTimeout(() => {
-            router.push('/admin/dashboard');
-          }, 1000);
-        } else {
-          setError(data.error || 'Admin login failed');
-        }
-      } else if (userType === 'instructor') {
-        // Instructor authentication
-        const response = await fetch('/api/instructor/simple-auth', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password }),
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.success) {
-          localStorage.setItem('instructorToken', data.token);
-          localStorage.setItem('instructorData', JSON.stringify(data.instructor));
-          setMessage('Instructor login successful! Redirecting...');
-          
-          setTimeout(() => {
-            router.push('/instructor/dashboard');
-          }, 1000);
-        } else {
-          setError(data.error || 'Instructor login failed');
-        }
-      } else if (userType === 'guardian') {
-        // Guardian authentication (demo mode)
-        setMessage('Guardian login successful! Redirecting...');
+      console.log('Student login result:', { user: user?.email, error: error?.message });
+      
+      if (error) {
+        console.log('Student login failed with error:', error.message);
+        setError(error.message || 'Login failed. Please try again.');
+      } else if (user) {
+        console.log('Student login successful, redirecting...');
+        setMessage('Login successful! Redirecting...');
         
         setTimeout(() => {
-          router.push('/dashboard');
+          router.push('/student');
         }, 1000);
       }
     } catch (error: any) {
@@ -235,43 +184,10 @@ export default function LoginPage() {
                     <Lock className="w-8 h-8 text-white" />
                   </div>
                   <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-3">Welcome Back</h2>
-                  <p className="text-slate-600 dark:text-slate-400 text-lg">
-                    Sign in to your {userType === 'student' ? 'student' : userType === 'instructor' ? 'instructor' : userType === 'admin' ? 'admin' : 'guardian'} portal
-                  </p>
+                  <p className="text-slate-600 dark:text-slate-400 text-lg">Sign in to your student portal</p>
                 </div>
 
                 <form className="space-y-8" onSubmit={handleLogin}>
-                  {/* User Type Selection */}
-                  <div className="space-y-3">
-                    <label className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
-                      Sign in as
-                    </label>
-                    <div className="grid grid-cols-2 gap-3">
-                      {[
-                        { value: 'student', label: 'Student', icon: '👨‍🎓', color: 'blue' },
-                        { value: 'instructor', label: 'Instructor', icon: '👨‍🏫', color: 'green' },
-                        { value: 'admin', label: 'Admin', icon: '👨‍💼', color: 'purple' },
-                        { value: 'guardian', label: 'Guardian', icon: '👨‍👩‍👧‍👦', color: 'orange' }
-                      ].map((type) => (
-                        <button
-                          key={type.value}
-                          type="button"
-                          onClick={() => setUserType(type.value as any)}
-                          className={`p-3 rounded-xl border-2 transition-all duration-300 text-sm font-medium ${
-                            userType === type.value
-                              ? `border-${type.color}-500 bg-${type.color}-50 dark:bg-${type.color}-900/20 text-${type.color}-700 dark:text-${type.color}-300`
-                              : 'border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-400 hover:border-slate-300 dark:hover:border-slate-500'
-                          }`}
-                        >
-                          <div className="flex flex-col items-center gap-1">
-                            <span className="text-lg">{type.icon}</span>
-                            <span>{type.label}</span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-
                   {/* Enhanced Email Field */}
                   <div className="space-y-3">
                     <label htmlFor="email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
@@ -363,34 +279,6 @@ export default function LoginPage() {
                       </>
                     )}
                   </button>
-
-                  {/* Demo Credentials */}
-                  {userType !== 'student' && (
-                    <div className="bg-slate-50 dark:bg-slate-700/50 rounded-xl p-4 mt-6">
-                      <h3 className="text-sm font-semibold text-slate-700 dark:text-slate-300 mb-2">Demo Credentials:</h3>
-                      <div className="text-sm text-slate-600 dark:text-slate-400 space-y-1">
-                        {userType === 'admin' && (
-                          <>
-                            <p><strong>Email:</strong> admin@coastedcode.com</p>
-                            <p><strong>Password:</strong> admin123</p>
-                          </>
-                        )}
-                        {userType === 'instructor' && (
-                          <>
-                            <p><strong>Email:</strong> instructor@coastedcode.com</p>
-                            <p><strong>Password:</strong> instructor123</p>
-                          </>
-                        )}
-                        {userType === 'guardian' && (
-                          <>
-                            <p><strong>Email:</strong> Any email</p>
-                            <p><strong>Password:</strong> Any password</p>
-                            <p className="text-xs text-slate-500">(Demo mode - no actual authentication)</p>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                  )}
 
                   {/* Enhanced Sign Up Link */}
                   <div className="text-center pt-6">
