@@ -11,7 +11,9 @@ export default function Navbar() {
   const [isClient, setIsClient] = useState(false)
   const pathname = usePathname()
   
-  // Ensure consistent href for login
+  // Ensure consistent href for login - always use /login to avoid hydration mismatch
+  // This must be consistent between server and client to prevent hydration errors
+  // Never change this based on pathname or user state to prevent hydration mismatches
   const loginHref = '/login'
 
   useEffect(() => {

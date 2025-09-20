@@ -5,13 +5,21 @@ import { useEffect, useState } from 'react'
 
 export default function StudentFab() {
   const [dest, setDest] = useState('/login')
+  const [isClient, setIsClient] = useState(false)
+  
   useEffect(() => {
+    setIsClient(true)
     try {
       const raw = localStorage.getItem('student')
       const s = raw ? JSON.parse(raw) : null
       setDest(s?.email ? '/student' : '/login')
     } catch { setDest('/login') }
   }, [])
+
+  // Only render after client-side hydration to prevent hydration mismatches
+  if (!isClient) {
+    return null
+  }
 
   return (
     <motion.div
