@@ -24,47 +24,65 @@ export default function InstructorLayout({
   const router = useRouter()
 
   useEffect(() => {
-    const token = localStorage.getItem('instructorToken')
-    if (!token) {
-      router.push('/instructor/login')
-      return
-    }
-
-    // Check if token is expired
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]))
-      const currentTime = Math.floor(Date.now() / 1000)
-      
-      if (payload.exp && payload.exp < currentTime) {
-        console.log('Token expired, redirecting to login')
-        localStorage.removeItem('instructorToken')
-        localStorage.removeItem('instructorData')
+    const checkAuth = () => {
+      const token = localStorage.getItem('instructorToken')
+      if (!token) {
+        console.log('No token found, redirecting to login')
         router.push('/instructor/login')
+        setLoading(false)
         return
       }
-    } catch (error) {
-      console.error('Error checking token expiration:', error)
-      localStorage.removeItem('instructorToken')
-      localStorage.removeItem('instructorData')
-      router.push('/instructor/login')
-      return
-    }
 
-    // Verify token and get instructor info
-    const instructorData = localStorage.getItem('instructorData')
-    if (instructorData) {
-      try {
-        const parsedData = JSON.parse(instructorData)
-        setInstructor(parsedData)
-      } catch (error) {
-        console.error('Error parsing instructor data:', error)
-        localStorage.removeItem('instructorData')
+      // Check if token is expired (only if it's a JWT token)
+      if (token.includes('.')) {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]))
+          const currentTime = Math.floor(Date.now() / 1000)
+          
+          if (payload.exp && payload.exp < currentTime) {
+            console.log('Token expired, redirecting to login')
+            localStorage.removeItem('instructorToken')
+            localStorage.removeItem('instructorData')
+            router.push('/instructor/login')
+            setLoading(false)
+            return
+          }
+        } catch (error) {
+          console.error('Error checking token expiration:', error)
+          localStorage.removeItem('instructorToken')
+          localStorage.removeItem('instructorData')
+          router.push('/instructor/login')
+          setLoading(false)
+          return
+        }
+      }
+
+      // Verify token and get instructor info
+      const instructorData = localStorage.getItem('instructorData')
+      if (instructorData) {
+        try {
+          const parsedData = JSON.parse(instructorData)
+          setInstructor(parsedData)
+          setLoading(false)
+        } catch (error) {
+          console.error('Error parsing instructor data:', error)
+          localStorage.removeItem('instructorData')
+          localStorage.removeItem('instructorToken')
+          router.push('/instructor/login')
+          setLoading(false)
+          return
+        }
+      } else {
+        console.log('No instructor data found, redirecting to login')
         localStorage.removeItem('instructorToken')
         router.push('/instructor/login')
-        return
+        setLoading(false)
       }
     }
-    setLoading(false)
+
+    // Add a small delay to prevent flash of loading state
+    const timer = setTimeout(checkAuth, 100)
+    return () => clearTimeout(timer)
   }, [router])
 
   const logout = () => {

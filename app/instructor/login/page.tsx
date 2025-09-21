@@ -19,6 +19,7 @@ export default function InstructorLogin() {
     setError('')
 
     try {
+      console.log('Attempting login with:', formData.email)
       const response = await fetch('/api/instructor/simple-auth', {
         method: 'POST',
         headers: {
@@ -28,16 +29,19 @@ export default function InstructorLogin() {
       })
 
       const data = await response.json()
+      console.log('Login response:', data)
 
       if (response.ok && data.success) {
         // Store token and instructor data
         localStorage.setItem('instructorToken', data.token)
         localStorage.setItem('instructorData', JSON.stringify(data.instructor))
+        console.log('Login successful, redirecting to dashboard')
         
         // Redirect to dashboard
         router.push('/instructor/dashboard')
       } else {
         setError(data.error || 'Login failed')
+        console.error('Login failed:', data.error)
       }
     } catch (error) {
       console.error('Login error:', error)
