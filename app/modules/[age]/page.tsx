@@ -13,10 +13,10 @@ import {
   GraduationCap
 } from 'lucide-react'
 
-type Props = { params: { age: string } };
+type Props = { params: Promise<{ age: string }> };
 
 export default async function ModulePage({ params }: Props) {
-  const { age } = params;
+  const { age } = await params;
   
   const getAgeBandTitle = (ageBand: string) => {
     switch (ageBand) {

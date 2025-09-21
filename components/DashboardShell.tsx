@@ -41,18 +41,18 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           .single();
 
         if (enrollment && !error) {
-          setStudentName(enrollment.child_name || user.displayName || user.email?.split('@')[0] || 'Student');
+          setStudentName(enrollment.child_name || (user as any).displayName || user.email?.split('@')[0] || 'Student');
         } else {
-          setStudentName(user.displayName || user.email?.split('@')[0] || 'Student');
+          setStudentName((user as any).displayName || user.email?.split('@')[0] || 'Student');
         }
       } catch (err) {
         console.error('Error fetching student name:', err);
-        setStudentName(user.displayName || user.email?.split('@')[0] || 'Student');
+        setStudentName((user as any).displayName || user.email?.split('@')[0] || 'Student');
       }
     };
 
     fetchStudentName();
-  }, [user?.email, user?.displayName])
+  }, [user?.email, (user as any)?.displayName])
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">

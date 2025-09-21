@@ -13,7 +13,7 @@ export async function sendWelcomeEmail(email: string, firstName: string): Promis
   try {
     const template = getWelcomeEmailTemplate(firstName);
     
-    await resend.emails.send({
+    await sendMail({
       from: 'Coasted Code <noreply@coasted-code.com>',
       to: email,
       subject: template.subject,
@@ -35,7 +35,7 @@ export async function sendPasswordResetEmail(email: string, firstName: string, r
   try {
     const template = getPasswordResetEmailTemplate(firstName, resetLink);
     
-    await resend.emails.send({
+    await sendMail({
       from: 'Coasted Code <noreply@coasted-code.com>',
       to: email,
       subject: template.subject,
@@ -83,7 +83,7 @@ export async function sendPaymentFailureEmail(email: string, firstName: string, 
   try {
     const template = getPaymentFailureTemplate(firstName, payment);
     
-    await resend.emails.send({
+    await sendMail({
       from: 'Coasted Code <noreply@coasted-code.com>',
       to: email,
       subject: template.subject,
@@ -105,7 +105,7 @@ export async function sendSubscriptionRenewalReminder(email: string, firstName: 
   try {
     const template = getSubscriptionRenewalTemplate(firstName, renewalDate);
     
-    await resend.emails.send({
+    await sendMail({
       from: 'Coasted Code <noreply@coasted-code.com>',
       to: email,
       subject: template.subject,
@@ -127,7 +127,7 @@ export async function sendAccountVerificationEmail(email: string, firstName: str
   try {
     const template = getAccountVerificationTemplate(firstName, verificationLink);
     
-    await resend.emails.send({
+    await sendMail({
       from: 'Coasted Code <noreply@coasted-code.com>',
       to: email,
       subject: template.subject,

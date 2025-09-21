@@ -405,7 +405,13 @@ export class PaymentService {
    */
   private async sendPaymentSuccessNotification(user: any, payment: Payment): Promise<void> {
     try {
-      await sendPaymentConfirmationEmail(user.email, user.firstName, payment);
+      await sendPaymentConfirmationEmail(user.email, user.firstName, {
+        reference: payment.transactionId || '',
+        amount: payment.amount,
+        currency: payment.currency,
+        paidAt: payment.paymentDate.toISOString(),
+        course: payment.subscriptionPlan || ''
+      }, '');
     } catch (error) {
       console.error('Failed to send payment success email:', error);
     }

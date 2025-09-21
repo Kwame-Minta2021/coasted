@@ -66,7 +66,7 @@ export function useStudentName() {
   }, [user?.email]);
 
   // Return the child's name, falling back to user display name or email if not available
-  const studentName = studentData?.childName || user?.displayName || user?.email?.split('@')[0] || 'Student';
+  const studentName = studentData?.childName || (user as any)?.displayName || user?.email?.split('@')[0] || 'Student';
 
   return {
     studentName,

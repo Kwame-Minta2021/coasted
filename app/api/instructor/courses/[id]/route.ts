@@ -7,7 +7,7 @@ export const runtime = 'nodejs'
 // GET - Fetch individual course details
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const instructor = await verifyInstructorToken(request)
@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const courseId = params.id
+    const { id: courseId } = await params
 
     // Fetch course details
     const { data: course, error: courseError } = await supabaseAdmin
@@ -41,7 +41,7 @@ export async function GET(
 // PUT - Update course
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const instructor = await verifyInstructorToken(request)
@@ -49,7 +49,7 @@ export async function PUT(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const courseId = params.id
+    const { id: courseId } = await params
     const updateData = await request.json()
 
     // Validate required fields
@@ -91,7 +91,7 @@ export async function PUT(
 // DELETE - Delete course
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const instructor = await verifyInstructorToken(request)
@@ -99,7 +99,7 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
-    const courseId = params.id
+    const { id: courseId } = await params
 
     // Delete course
     const { error: deleteError } = await supabaseAdmin

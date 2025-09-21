@@ -23,21 +23,24 @@ export async function POST(request: NextRequest) {
     }
 
     try {
-      // Get user by email
-      const { data: userRecord, error: getUserError } = await supabaseAdmin.auth.admin.getUserByEmail(email)
+      // Get user by email using listUsers and filter
+      const { data: users, error: getUserError } = await supabaseAdmin.auth.admin.listUsers()
       
       if (getUserError) {
-        if (getUserError.message.includes('User not found')) {
-          return NextResponse.json(
-            { error: 'User not found with this email' },
-            { status: 404 }
-          )
-        }
-        throw getUserError;
+        throw getUserError
+      }
+      
+      const userRecord = users.users.find((user: any) => user.email === email)
+      
+      if (!userRecord) {
+        return NextResponse.json(
+          { error: 'User not found with this email' },
+          { status: 404 }
+        )
       }
       
       // Update user password
-      const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(userRecord.user.id, {
+      const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(userRecord.id, {
         password: newPassword
       })
 
@@ -45,7 +48,7 @@ export async function POST(request: NextRequest) {
         throw updateError;
       }
 
-      console.log('Password updated for user:', userRecord.user.id)
+      console.log('Password updated for user:', userRecord.id)
 
       return NextResponse.json({
         success: true,

@@ -72,7 +72,7 @@ export default function AccountPage() {
         // Set basic user data
         setFormData(prev => ({
           ...prev,
-          name: user.displayName || user.email?.split('@')[0] || '',
+          name: (user as any).displayName || user.email?.split('@')[0] || '',
           email: user.email || ''
         }));
 
@@ -95,7 +95,7 @@ export default function AccountPage() {
             // Use child's name instead of parent's name
             setFormData(prev => ({
               ...prev,
-              name: enrollment.child_name || user.displayName || user.email?.split('@')[0] || ''
+              name: enrollment.child_name || (user as any).displayName || user.email?.split('@')[0] || ''
             }));
           }
         } catch (err) {

@@ -21,7 +21,7 @@ INSERT INTO instructors (email, password_hash, name, bio, specialization, status
 VALUES (
   'instructor@coastedcode.com',
   '$2b$10$qDypLE1QnExXXp.Nl7LY9.ag7/0VFu9RaIRsn1SdatfloV8vtlR0K', -- instructor123
-  'Demo Instructor',
+  'Courses Instructor',
   'Experienced coding instructor specializing in kids education',
   ARRAY['Python', 'JavaScript', 'Scratch', 'Robotics'],
   'active'

@@ -1,5 +1,6 @@
 // Re-export from the main supabase client
 export { supabase, supabaseAdmin } from '../supabase'
+import { supabase } from '../supabase'
 
 // Helper function to get current user
 export const getCurrentUser = async () => {

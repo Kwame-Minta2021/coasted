@@ -1,7 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-// Replaced UI component imports with standard HTML elements
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 import { 
   Plus, 
   Edit, 
@@ -187,14 +197,14 @@ export default function CoursesPage() {
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="bg-white rounded-lg shadow-md border animate-pulse">
-              <div className="p-6">
+            <Card key={i} className="animate-pulse">
+              <CardContent className="p-6">
                 <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
                 <div className="h-3 bg-gray-200 rounded w-1/2 mb-4"></div>
                 <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
                 <div className="h-3 bg-gray-200 rounded w-2/3"></div>
-              </div>
-            </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>
@@ -209,13 +219,13 @@ export default function CoursesPage() {
           <h1 className="text-3xl font-bold text-gray-900">Courses</h1>
           <p className="text-gray-600">Manage your course catalog and content</p>
         </div>
-        <button 
+        <Button 
           onClick={() => setShowCreateForm(true)}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center transition-colors"
+          className="bg-blue-600 hover:bg-blue-700"
         >
           <Plus className="w-4 h-4 mr-2" />
           Create Course
-        </button>
+        </Button>
       </div>
 
       {error && (
@@ -226,27 +236,25 @@ export default function CoursesPage() {
 
       {/* Create/Edit Course Form */}
       {showCreateForm && (
-        <div className="bg-white rounded-lg shadow-md border">
-          <div className="p-6 border-b">
-            <h2 className="text-xl font-semibold text-gray-900">{editingCourse ? 'Edit Course' : 'Create New Course'}</h2>
-            <p className="text-gray-600 mt-1">
+        <Card>
+          <CardHeader>
+            <CardTitle>{editingCourse ? 'Edit Course' : 'Create New Course'}</CardTitle>
+            <CardDescription>
               {editingCourse ? 'Update course information' : 'Add a new course to your catalog'}
-            </p>
-          </div>
-          <div className="p-6">
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
             <form onSubmit={editingCourse ? handleUpdateCourse : handleCreateCourse} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Course Title *
                   </label>
-                  <input
-                    type="text"
+                  <Input
                     value={formData.title}
                     onChange={(e) => setFormData({...formData, title: e.target.value})}
                     placeholder="Enter course title"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 
@@ -254,13 +262,12 @@ export default function CoursesPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Price (GHS) *
                   </label>
-                  <input
+                  <Input
                     type="number"
                     value={formData.price}
                     onChange={(e) => setFormData({...formData, price: e.target.value})}
                     placeholder="800"
                     required
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -270,33 +277,33 @@ export default function CoursesPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Level *
                   </label>
-                  <select 
-                    value={formData.level} 
-                    onChange={(e) => setFormData({...formData, level: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Select level</option>
-                    <option value="beginner">Beginner</option>
-                    <option value="intermediate">Intermediate</option>
-                    <option value="advanced">Advanced</option>
-                  </select>
+                  <Select value={formData.level} onValueChange={(value) => setFormData({...formData, level: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select level" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="beginner">Beginner</SelectItem>
+                      <SelectItem value="intermediate">Intermediate</SelectItem>
+                      <SelectItem value="advanced">Advanced</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Category
                   </label>
-                  <select 
-                    value={formData.category} 
-                    onChange={(e) => setFormData({...formData, category: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  >
-                    <option value="">Select category</option>
-                    <option value="coding">Coding</option>
-                    <option value="robotics">Robotics</option>
-                    <option value="ai">AI</option>
-                    <option value="general">General</option>
-                  </select>
+                  <Select value={formData.category} onValueChange={(value) => setFormData({...formData, category: value})}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="coding">Coding</SelectItem>
+                      <SelectItem value="robotics">Robotics</SelectItem>
+                      <SelectItem value="ai">AI</SelectItem>
+                      <SelectItem value="general">General</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               </div>
 
@@ -305,12 +312,10 @@ export default function CoursesPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Duration
                   </label>
-                  <input
-                    type="text"
+                  <Input
                     value={formData.duration}
                     onChange={(e) => setFormData({...formData, duration: e.target.value})}
                     placeholder="8 weeks"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
                 
@@ -318,12 +323,10 @@ export default function CoursesPage() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Instructor
                   </label>
-                  <input
-                    type="text"
+                  <Input
                     value={formData.instructor}
                     onChange={(e) => setFormData({...formData, instructor: e.target.value})}
                     placeholder="Instructor name"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
@@ -332,19 +335,18 @@ export default function CoursesPage() {
                 <label className="block text-sm font-medium text-gray-700 mb-1">
                   Description
                 </label>
-                <textarea
+                <Textarea
                   value={formData.description}
                   onChange={(e) => setFormData({...formData, description: e.target.value})}
                   placeholder="Course description and learning objectives"
                   rows={4}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
                 />
               </div>
 
               <div className="flex justify-end space-x-2">
-                <button 
+                <Button 
                   type="button" 
-                  className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                  variant="outline" 
                   onClick={() => {
                     setShowCreateForm(false)
                     setEditingCourse(null)
@@ -360,42 +362,36 @@ export default function CoursesPage() {
                   }}
                 >
                   Cancel
-                </button>
-                <button 
-                  type="submit" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
-                >
+                </Button>
+                <Button type="submit" className="bg-blue-600 hover:bg-blue-700">
                   {editingCourse ? 'Update Course' : 'Create Course'}
-                </button>
+                </Button>
               </div>
             </form>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
 
       {/* Courses Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {courses.map((course) => (
-          <div key={course.id} className="bg-white rounded-lg shadow-md border hover:shadow-lg transition-shadow">
-            <div className="p-6 border-b">
+          <Card key={course.id} className="hover:shadow-lg transition-shadow">
+            <CardHeader>
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-lg font-semibold text-gray-900">{course.title}</h3>
-                  <p className="text-gray-600 mt-1">
+                  <CardTitle className="text-lg">{course.title}</CardTitle>
+                  <CardDescription className="mt-1">
                     {course.level} • {course.category}
-                  </p>
+                  </CardDescription>
                 </div>
                 <div className="flex space-x-1">
-                  <button 
-                    className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-md transition-colors"
-                    onClick={() => handleEditCourse(course)}
-                  >
+                  <Button size="sm" variant="ghost" onClick={() => handleEditCourse(course)}>
                     <Edit className="w-4 h-4" />
-                  </button>
+                  </Button>
                 </div>
               </div>
-            </div>
-            <div className="p-6">
+            </CardHeader>
+            <CardContent>
               <div className="space-y-3">
                 <p className="text-sm text-gray-600 line-clamp-2">
                   {course.description || 'No description available'}
@@ -432,16 +428,17 @@ export default function CoursesPage() {
                 )}
 
                 <div className="pt-2 border-t">
-                  <button 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm transition-colors"
+                  <Button 
+                    size="sm" 
+                    className="w-full"
                     onClick={() => window.open(`/admin/content?course_id=${course.id}`, '_blank')}
                   >
                     Manage Content
-                  </button>
+                  </Button>
                 </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
@@ -450,13 +447,10 @@ export default function CoursesPage() {
           <BookOpen className="w-12 h-12 text-gray-400 mx-auto mb-4" />
           <h3 className="text-lg font-medium text-gray-900 mb-2">No courses yet</h3>
           <p className="text-gray-600 mb-4">Create your first course to get started</p>
-          <button 
-            onClick={() => setShowCreateForm(true)}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md flex items-center mx-auto transition-colors"
-          >
+          <Button onClick={() => setShowCreateForm(true)}>
             <Plus className="w-4 h-4 mr-2" />
             Create Course
-          </button>
+          </Button>
         </div>
       )}
     </div>

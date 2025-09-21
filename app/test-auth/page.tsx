@@ -245,7 +245,7 @@ export default function TestAuthPage() {
             <div className="mt-4 p-3 rounded-md bg-green-100">
               <p className="text-sm font-medium">✅ Currently signed in as:</p>
               <p className="text-sm">{user.email}</p>
-              <p className="text-sm">UID: {user.uid}</p>
+              <p className="text-sm">UID: {(user as any).uid}</p>
             </div>
           )}
         </div>

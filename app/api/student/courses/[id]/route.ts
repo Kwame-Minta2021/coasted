@@ -6,10 +6,10 @@ export const runtime = 'nodejs'
 // GET - Fetch course details for students
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const courseId = params.id
+    const { id: courseId } = await params
 
     // Fetch course details with instructor information
     const { data: course, error: courseError } = await supabaseAdmin

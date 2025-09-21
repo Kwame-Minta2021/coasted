@@ -100,14 +100,14 @@ const getCourseBySlug = (slug: string) => {
   return courses.find(course => course.slug === slug) || courses[0]
 }
 
-export default function CourseDetailPage({ params }: { params: { slug: string } }) {
+export default function CourseDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [isEnrolling, setIsEnrolling] = useState(false)
   const [enrollmentStatus, setEnrollmentStatus] = useState<'idle' | 'success' | 'error'>('idle')
   const [course, setCourse] = useState<any>(null)
   
   useEffect(() => {
-    const loadCourse = () => {
-      const { slug } = params;
+    const loadCourse = async () => {
+      const { slug } = await params;
       const courseData = getCourseBySlug(slug);
       setCourse(courseData);
     };

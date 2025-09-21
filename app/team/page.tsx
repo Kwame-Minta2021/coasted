@@ -6,9 +6,9 @@ import Image from 'next/image'
 const teamMembers = [
   {
     name: ' Frederick Kwame Minta',
-    role: 'Founder & Lead Instructor',
+    role: 'Senior Robotics Lead Instructor',
     image: '/team/images/Fred.png',
-    bio: 'Computer Science & Engineering with 4+ years teaching experience. Passionate about making coding accessible to young minds.',
+    bio: 'Computer Engineer and Research with 4+ years teaching experience. Passionate about making coding accessible to young minds.',
     expertise: ['Python', 'AI/ML', 'Robotics', 'Curriculum Design'],
     education: 'Computer Science & Engineering, University of Mines and Technology',
     linkedin: 'https://www.linkedin.com/in/minta-frederick-kwame/',
@@ -17,10 +17,10 @@ const teamMembers = [
   },
   {
     name: ' Ellen Adwoa Nyini',
-    role: 'Robotics & Electronics Specialist',
+    role: 'Programs Manager and Talent Recruiter',
     image: '/team/images/Ellen.png',
     bio: 'Computer Science & Engineering with expertise in Arduino, Raspberry Pi, and hands-on robotics projects.',
-    expertise: ['Arduino', 'Raspberry Pi', 'Circuit Design', '3D Printing'],
+    expertise: ['Quality Assurance, Project Management, Machine Learning'],
     education: 'BSc Computer Science & Engineering, UMaT',
     linkedin: 'https://www.linkedin.com/in/ellen-adwoa-nyini-38a372214?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app',
     github: '#',
@@ -50,23 +50,23 @@ const teamMembers = [
   },
   {
     name: 'Linda Essilfie',
-    role: 'Student Mentor and Emotional Health Specialist and Courses Coordinator',
+    role: 'Student Mentor,Emotional Health Specialist and Courses Coordinator',
     image: '/team/images/Linda.png',
     bio: 'Education specialist focused on student engagement and parent communication. Ensures every child thrives.',
     expertise: ['Student Support', 'Parent Communication', 'Learning Assessment', 'Safeguarding'],
     education: 'Biomedical Engineering, Academic City University',
-    linkedin: '#',
+    linkedin: 'https://www.linkedin.com/in/linda-essilfie/',
     github: '#',
     email: 'Linda.Essilfie@acity.edu.gh'
   },
     {
       name: 'Albert Essilfie',
-      role: 'Industrial and Partner Relations',
+      role: 'Industrial and Partnership Relations Officer',
       image: '/team/images/Albert.jpg', // Using placeholder image until Albert.jpg is available
       bio: 'Systems Engineer with a passion for building partnerships with schools and organizations across Ghana.',
       expertise: ['Operations Management', 'Business Strategy', 'Community Outreach'],
       education: 'Masters in Systems Engineering,GWU(USA)',
-      linkedin: '#',
+      linkedin: 'https://www.linkedin.com/in/albert-essilfie-054237080l/',
       github: '#',
       email: 'albertessilfie71@gmail.com'
     }

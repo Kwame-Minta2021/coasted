@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
         admin_id: admin.id,
         action: 'login',
         resource_type: 'admin_session',
-        ip_address: request.ip || request.headers.get('x-forwarded-for') || 'unknown',
+        ip_address: request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown',
         user_agent: request.headers.get('user-agent') || 'unknown'
       })
 

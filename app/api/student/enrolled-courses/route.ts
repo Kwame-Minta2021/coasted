@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
       modules: filteredModules,
       enrollment: {
         ageBand: enrollment.age_band,
-        enrolledAt: enrollment.created_at
+        enrolledAt: (enrollment as any).created_at
       }
     }
 

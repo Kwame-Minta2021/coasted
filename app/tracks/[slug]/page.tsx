@@ -36,15 +36,15 @@ const performanceMonitor = {
 }
 // Firebase database operations will be handled directly in components
 
-export default function TrackDetailPage({ params }: { params: { slug: string } }) {
+export default function TrackDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [selectedMode, setSelectedMode] = useState<'in-lab' | 'online' | 'hybrid'>('in-lab')
   const [showEnrollmentForm, setShowEnrollmentForm] = useState(false)
   const [expandedFeatures, setExpandedFeatures] = useState<string[]>([])
   const [slug, setSlug] = useState<string>('')
 
   useEffect(() => {
-    const loadParams = () => {
-      const { slug: trackSlug } = params;
+    const loadParams = async () => {
+      const { slug: trackSlug } = await params;
       setSlug(trackSlug);
     };
     loadParams();

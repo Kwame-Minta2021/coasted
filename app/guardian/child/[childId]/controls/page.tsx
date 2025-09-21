@@ -26,13 +26,13 @@ const mockChildData = {
   }
 };
 
-export default function ChildControlsPage({ params }: { params: { childId: string } }) {
+export default function ChildControlsPage({ params }: { params: Promise<{ childId: string }> }) {
   const [saving, setSaving] = useState(false);
   const [childId, setChildId] = useState<string>('');
 
   useEffect(() => {
-    const loadParams = () => {
-      const { childId: id } = params;
+    const loadParams = async () => {
+      const { childId: id } = await params;
       setChildId(id);
     };
     loadParams();

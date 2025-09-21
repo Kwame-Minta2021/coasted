@@ -27,9 +27,9 @@ export function StudentAuthProvider({ children }: { children: ReactNode }) {
     if (user) {
       setStudent({
         email: user.email || '',
-        name: user.displayName || user.email?.split('@')[0] || 'Student',
+        name: (user as any).displayName || user.email?.split('@')[0] || 'Student',
         isLoggedIn: true,
-        uid: user.uid
+        uid: (user as any).uid
       });
     } else {
       setStudent(null);

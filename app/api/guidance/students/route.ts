@@ -44,9 +44,9 @@ export async function GET(request: NextRequest) {
     // Transform data to match expected format
     const students = guidanceData.map(item => ({
       id: item.student_id,
-      name: item.users?.display_name || 'Unknown',
-      email: item.users?.email || '',
-      age: item.users?.age_band || 'Unknown',
+      name: (item.users as any)?.display_name || 'Unknown',
+      email: (item.users as any)?.email || '',
+      age: (item.users as any)?.age_band || 'Unknown',
       screenTimeLimit: item.screen_time_limit,
       focusModeEnabled: item.focus_mode_enabled,
       pinEnabled: item.pin_enabled,

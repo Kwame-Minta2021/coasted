@@ -1,9 +1,9 @@
 export default async function GuardianChildPage({ 
   params 
 }: { 
-  params: { childId: string } 
+  params: Promise<{ childId: string }> 
 }) {
-  const { childId } = params;
+  const { childId } = await params;
   
   return (
     <div className="container mx-auto px-6 py-8">

@@ -5,7 +5,7 @@ import { handleError, formatErrorResponse } from '../../../../../lib/errors';
 
 export async function GET(
   request: NextRequest,
-  { params }: Promise<{ params: { paymentId: string } }>
+  { params }: { params: Promise<{ paymentId: string }> }
 ) {
   try {
     const authHeader = request.headers.get('authorization');
@@ -16,7 +16,7 @@ export async function GET(
     const token = authHeader.substring(7);
     const { uid } = await authService.verifyToken(token);
     
-    const { paymentId } = params;
+    const { paymentId } = await params;
     
     // Get payment details
     const payment = await paymentService.getPaymentById(paymentId);

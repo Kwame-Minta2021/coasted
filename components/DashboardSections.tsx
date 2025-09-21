@@ -235,7 +235,7 @@ export function DashboardContent() {
     const fetchEnrollmentData = async () => {
       if (user) {
         try {
-          const response = await fetch(`/api/enroll?userId=${user.uid}`);
+          const response = await fetch(`/api/enroll?userId=${(user as any).uid}`);
           const result = await response.json();
           
           if (result.success && result.data) {
