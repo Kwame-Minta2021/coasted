@@ -27,6 +27,7 @@ export default function InstructorLayout({
     const checkAuth = () => {
       // Check if we're on the login page - if so, skip authentication check
       if (typeof window !== 'undefined' && window.location.pathname === '/instructor/login') {
+        console.log('On login page, skipping auth check')
         setLoading(false)
         return
       }
@@ -140,6 +141,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/dashboard"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to dashboard')}
             >
               <Home className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">Dashboard</span>
@@ -148,6 +150,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/courses"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 hover:text-blue-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to courses')}
             >
               <BookOpen className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">My Courses</span>
@@ -156,6 +159,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/courses/new"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-green-50 hover:to-emerald-50 hover:text-green-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to create course')}
             >
               <PlusCircle className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">Create Course</span>
@@ -164,6 +168,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/schedule"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-purple-50 hover:to-violet-50 hover:text-purple-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to schedule')}
             >
               <Calendar className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">Schedule</span>
@@ -172,6 +177,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/students"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-orange-50 hover:to-amber-50 hover:text-orange-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to students')}
             >
               <Users className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">Students</span>
@@ -180,6 +186,7 @@ export default function InstructorLayout({
             <Link
               href="/instructor/settings"
               className="flex items-center px-4 py-3 text-gray-700 rounded-xl hover:bg-gradient-to-r hover:from-gray-50 hover:to-slate-50 hover:text-gray-700 transition-all duration-200 group"
+              onClick={() => console.log('Navigating to settings')}
             >
               <Settings className="w-5 h-5 mr-3 group-hover:scale-110 transition-transform" />
               <span className="font-medium">Settings</span>
