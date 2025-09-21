@@ -25,6 +25,12 @@ export default function InstructorLayout({
 
   useEffect(() => {
     const checkAuth = () => {
+      // Check if we're on the login page - if so, skip authentication check
+      if (typeof window !== 'undefined' && window.location.pathname === '/instructor/login') {
+        setLoading(false)
+        return
+      }
+
       const token = localStorage.getItem('instructorToken')
       if (!token) {
         console.log('No token found, redirecting to login')
@@ -100,6 +106,11 @@ export default function InstructorLayout({
         </div>
       </div>
     )
+  }
+
+  // If we're on the login page, just render the children (login form)
+  if (typeof window !== 'undefined' && window.location.pathname === '/instructor/login') {
+    return <>{children}</>
   }
 
   if (!instructor) {
