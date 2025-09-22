@@ -29,8 +29,8 @@ export const TRACKS: Track[] = [
       'Develop problem-solving skills'
     ],
     price: {
-      enrollment: 800,
-      monthly: 299
+      enrollment: 650,
+      monthly: 200
     }
   },
   {
@@ -48,8 +48,8 @@ export const TRACKS: Track[] = [
       'Understand app deployment'
     ],
     price: {
-      enrollment: 800,
-      monthly: 299
+      enrollment: 750,
+      monthly: 250
     }
   },
   {

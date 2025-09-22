@@ -33,7 +33,9 @@ export async function POST(request: NextRequest) {
       trackName,
       courseId,
       courseTitle,
-      studentId
+      studentId,
+      ageBand,
+      paymentAmount
     } = body
 
     // Validate required fields
@@ -90,6 +92,9 @@ export async function POST(request: NextRequest) {
     const enrollmentId = `enrollment_${Date.now()}`;
     const courseIdToUse = courseId || trackSlug;
     const courseTitleToUse = courseTitle || trackName;
+    
+    // Calculate payment amount based on age band if not provided
+    const calculatedPaymentAmount = paymentAmount || (ageBand === '6-9' ? 650 : ageBand === '10-13' ? 750 : 800);
 
     const enrollment: Enrollment = {
       enrollmentId,
@@ -101,7 +106,7 @@ export async function POST(request: NextRequest) {
       courseTitle: courseTitleToUse,
       status: 'pending_payment',
       createdAt: new Date().toISOString(),
-      paymentAmount: 154, // GHS 154
+      paymentAmount: calculatedPaymentAmount,
       paymentStatus: 'pending'
     }
 
@@ -292,7 +297,7 @@ export async function GET(request: NextRequest) {
           courseId: 'demo-course',
           courseTitle: 'Demo Course',
           status: 'pending_payment',
-          paymentAmount: 154,
+          paymentAmount: 750, // Updated to reflect new pricing
           paymentStatus: 'pending',
           createdAt: new Date().toISOString()
         };
@@ -316,7 +321,7 @@ export async function GET(request: NextRequest) {
         courseId: 'demo-course',
         courseTitle: 'Demo Course',
         status: 'pending_payment',
-        paymentAmount: 154,
+        paymentAmount: 750, // Updated to reflect new pricing
         paymentStatus: 'pending',
         createdAt: new Date().toISOString()
       };

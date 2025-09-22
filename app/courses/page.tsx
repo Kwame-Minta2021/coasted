@@ -78,7 +78,7 @@ export default function CoursesPage() {
           <div className="flex items-center justify-center gap-4 text-lg">
             <Sparkles className="w-6 h-6" />
             <span className="font-semibold">Special Launch Offer:</span>
-            <span>₵800 enrollment + ₵299/month after 30-day trial</span>
+            <span>₵650-₵800 enrollment + ₵200-₵299/month</span>
             <Sparkles className="w-6 h-6" />
           </div>
         </div>

@@ -231,7 +231,7 @@ function PaymentContent() {
                 <div className="border-t pt-3 mt-3">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total Amount:</span>
-                    <span className="text-2xl font-bold text-primary">GHS {enrollmentData?.paymentAmount || 154}</span>
+                    <span className="text-2xl font-bold text-primary">GHS {enrollmentData?.paymentAmount || 750}</span>
                   </div>
                 </div>
               </div>
