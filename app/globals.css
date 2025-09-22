@@ -275,6 +275,15 @@ html, body {
   color: hsl(var(--primary));
 }
 
+/* Map common utility tokens used in components to CSS variables */
+.text-foreground {
+  color: hsl(var(--foreground));
+}
+
+.text-muted-foreground {
+  color: hsl(var(--muted-foreground));
+}
+
 /* Enhanced shadows */
 .cc-shadow-sm {
   box-shadow: var(--shadow-sm);
