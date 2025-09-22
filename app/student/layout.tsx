@@ -156,9 +156,9 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
         >
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="p-4 lg:p-6 border-b border-white/20 dark:border-slate-700/20">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
+            <div className={`border-b border-white/20 dark:border-slate-700/20 ${isSidebarCollapsed ? 'p-3' : 'p-4 lg:p-6'}`}>
+              <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-between'}`}>
+                <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'}`}>
                   <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center flex-shrink-0">
                     <GraduationCap className="w-6 h-6 text-white" />
                   </div>
@@ -169,23 +169,32 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
                     </div>
                   )}
                 </div>
-                <button
-                  onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
-                  className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
-                  title={isSidebarCollapsed ? "Expand sidebar" : "Collapse sidebar"}
-                >
-                  {isSidebarCollapsed ? (
-                    <ChevronRight className="w-4 h-4 text-slate-600 dark:text-slate-400" />
-                  ) : (
+                {!isSidebarCollapsed && (
+                  <button
+                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                    className="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    title="Collapse sidebar"
+                  >
                     <ChevronLeft className="w-4 h-4 text-slate-600 dark:text-slate-400" />
-                  )}
-                </button>
+                  </button>
+                )}
               </div>
+              {isSidebarCollapsed && (
+                <div className="flex justify-center mt-2">
+                  <button
+                    onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+                    className="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                    title="Expand sidebar"
+                  >
+                    <ChevronRight className="w-3 h-3 text-slate-600 dark:text-slate-400" />
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Student Info */}
             {user && (
-              <div className="p-4 lg:p-6 border-b border-white/20 dark:border-slate-700/20">
+              <div className={`border-b border-white/20 dark:border-slate-700/20 ${isSidebarCollapsed ? 'p-3' : 'p-4 lg:p-6'}`}>
                 {!isSidebarCollapsed ? (
                   <div className="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900/30 dark:to-blue-800/30 rounded-xl p-4">
                     <div className="text-sm text-slate-600 dark:text-slate-400 mb-1">Welcome back</div>
@@ -205,7 +214,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
             )}
 
             {/* Navigation */}
-            <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
+            <nav className={`flex-1 space-y-2 overflow-y-auto ${isSidebarCollapsed ? 'p-2' : 'p-4'}`}>
               {sidebarItems.map((item) => {
                 const Icon = item.icon
                 const isActive = pathname === item.href
@@ -214,7 +223,11 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
                   <Link
                     key={item.href}
                     href={item.href}
-                    className={`flex items-center gap-3 px-4 py-3 rounded-xl font-medium transition-all duration-200 group ${
+                    className={`flex items-center rounded-xl font-medium transition-all duration-200 group ${
+                      isSidebarCollapsed 
+                        ? 'justify-center px-2 py-3' 
+                        : 'gap-3 px-4 py-3'
+                    } ${
                       isActive
                         ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 shadow-sm'
                         : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50'
@@ -233,10 +246,14 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
             </nav>
 
             {/* Footer */}
-            <div className="p-4 border-t border-white/20 dark:border-slate-700/20">
+            <div className={`border-t border-white/20 dark:border-slate-700/20 ${isSidebarCollapsed ? 'p-2' : 'p-4'}`}>
               <button
                 onClick={handleSignOut}
-                className="flex items-center gap-3 w-full px-4 py-3 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors group"
+                className={`flex items-center w-full rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/50 transition-colors group ${
+                  isSidebarCollapsed 
+                    ? 'justify-center px-2 py-3' 
+                    : 'gap-3 px-4 py-3'
+                }`}
                 title={isSidebarCollapsed ? "Sign Out" : undefined}
               >
                 <LogOut className="w-5 h-5 flex-shrink-0 group-hover:text-red-600 dark:group-hover:text-red-400" />
