@@ -149,7 +149,7 @@ export default function MultiStepEnrollmentForm() {
                 </label>
                 <input
                   type="text"
-                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-300 dark:border-slate-600 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2.5 sm:py-3 border border-slate-300 dark:border-slate-600 rounded-lg sm:rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-300 text-sm sm:text-base"
                   placeholder="Enter parent's full name"
                   value={form.parentName}
                   onChange={(e) => updateForm('parentName', e.target.value)}
@@ -163,7 +163,7 @@ export default function MultiStepEnrollmentForm() {
                 </label>
                 <input
                   type="email"
-                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-300"
+                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-300"
                   placeholder="parent@example.com"
                   value={form.parentEmail}
                   onChange={(e) => updateForm('parentEmail', e.target.value)}
@@ -177,7 +177,7 @@ export default function MultiStepEnrollmentForm() {
                 </label>
                 <input
                   type="tel"
-                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-300"
+                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-300"
                   placeholder="0241234567"
                   value={form.phone}
                   onChange={(e) => updateForm('phone', e.target.value)}
@@ -216,7 +216,7 @@ export default function MultiStepEnrollmentForm() {
                 </label>
                 <input
                   type="text"
-                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-300"
+                  className="w-full px-4 py-3 border border-slate-300 dark:border-slate-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all bg-white dark:bg-slate-700 text-slate-900 dark:text-white placeholder-slate-500 dark:placeholder-slate-300"
                   placeholder="Enter child's full name"
                   value={form.childName}
                   onChange={(e) => updateForm('childName', e.target.value)}
