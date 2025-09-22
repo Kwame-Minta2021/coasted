@@ -1,6 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
-import { Suspense } from 'react';
+import { Suspense, useMemo, useState } from 'react';
 import { 
   Gift,
   Clock,
@@ -11,10 +11,13 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import MultiStepEnrollmentForm from '@/components/MultiStepEnrollmentForm';
+import { COURSES } from '@/app/(data)/courses';
 
 function EnrollContent() {
   const sp = useSearchParams();
   const defaultAge = sp.get('age') ?? '10-13';
+  const [showAllTopics, setShowAllTopics] = useState(false);
+  const selectedCourse = useMemo(() => COURSES.find(c => c.id === defaultAge), [defaultAge]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
@@ -50,6 +53,64 @@ function EnrollContent() {
           </div>
 
 
+
+          {/* What You'll Learn */}
+          {selectedCourse && (
+            <div className="mt-6 sm:mt-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-white/20 dark:border-slate-700/20">
+              <div className="flex items-center justify-between mb-4 sm:mb-6">
+                <h3 className="text-lg sm:text-xl font-semibold text-slate-900 dark:text-white">
+                  What You'll Learn ({selectedCourse.title})
+                </h3>
+                <Link
+                  href={`/courses?age=${encodeURIComponent(selectedCourse.id)}`}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  Explore courses
+                </Link>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {selectedCourse.content.slice(0, 4).map((topic) => (
+                  <Link
+                    key={topic}
+                    href={`/courses?age=${encodeURIComponent(selectedCourse.id)}`}
+                    className="group flex items-start gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors"
+                  >
+                    <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span className="text-slate-800 dark:text-slate-200 group-hover:text-blue-700 dark:group-hover:text-blue-300 text-sm">
+                      {topic}
+                    </span>
+                  </Link>
+                ))}
+              </div>
+
+              {selectedCourse.content.length > 4 && (
+                <details className="group mt-4">
+                  <summary className="text-sm font-medium text-blue-600 dark:text-blue-400 cursor-pointer list-none select-none hover:underline">
+                    +{selectedCourse.content.length - 4} more topics
+                  </summary>
+                  <div className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {selectedCourse.content.slice(4).map((topic) => (
+                      <Link
+                        key={topic}
+                        href={`/courses?age=${encodeURIComponent(selectedCourse.id)}`}
+                        className="group flex items-start gap-3 p-3 rounded-lg border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors"
+                      >
+                        <svg className="w-5 h-5 text-blue-600 dark:text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-slate-800 dark:text-slate-200 group-hover:text-blue-700 dark:group-hover:text-blue-300 text-sm">
+                          {topic}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </details>
+              )}
+            </div>
+          )}
 
           {/* What's Included */}
           <div className="mt-6 sm:mt-8 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-xl sm:rounded-2xl p-4 sm:p-8 border border-white/20 dark:border-slate-700/20">
