@@ -4,8 +4,8 @@ export const COURSES = [
   {
     id: '6-9',
     title: 'Ages 6–9 · Spark Curiosity & Creativity',
-    oneTime: 800,
-    monthly: 299,
+    oneTime: 650,
+    monthly: 200,
     content: [
       'Creative Thinking & Imagination Lab',
       'Critical Thinking & Problem Identification',
@@ -23,8 +23,8 @@ export const COURSES = [
   {
     id: '10-13',
     title: 'Ages 10–13 · Build Skills & Confidence',
-    oneTime: 800,
-    monthly: 299,
+    oneTime: 750,
+    monthly: 250,
     content: [
       'Problem Solving & Logical Reasoning',
       'Python Programming Basics',

@@ -9,7 +9,8 @@ export async function initializePayment(formData: FormData) {
     const ageBand = formData.get('ageBand') as string
     const parentName = formData.get('parentName') as string
     const childName = formData.get('childName') as string
-    const amountGhs = 800 // ₵800 enrollment
+    // Determine enrollment amount by age band
+    const amountGhs = ageBand === '6-9' ? 650 : ageBand === '10-13' ? 750 : 800
 
     console.log('Form data:', { email, phone, ageBand, parentName, childName, amountGhs });
 

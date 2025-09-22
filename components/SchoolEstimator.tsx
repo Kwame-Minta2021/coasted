@@ -65,13 +65,13 @@ export default function SchoolEstimator() {
           {/* Contact */}
           <div className="grid gap-3 md:grid-cols-2">
             <input required name="school" placeholder="School name" value={v.schoolName}
-              onChange={e=>update('schoolName', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400"/>
+              onChange={e=>update('schoolName', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 placeholder-slate-500 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:placeholder-slate-400"/>
             <input required name="contact" placeholder="Contact person" value={v.contactName}
-              onChange={e=>update('contactName', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400"/>
+              onChange={e=>update('contactName', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 placeholder-slate-500 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:placeholder-slate-400"/>
             <input required name="email" type="email" placeholder="Email" value={v.email}
-              onChange={e=>update('email', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400"/>
+              onChange={e=>update('email', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 placeholder-slate-500 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:placeholder-slate-400"/>
             <input name="phone" placeholder="Phone" value={v.phone}
-              onChange={e=>update('phone', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 dark:bg-slate-800 dark:text-white dark:border-slate-600 placeholder-slate-500 dark:placeholder-slate-400"/>
+              onChange={e=>update('phone', e.target.value)} className="rounded-xl border px-4 py-3 bg-white text-slate-900 border-slate-300 placeholder-slate-500 dark:bg-slate-900 dark:text-white dark:border-slate-700 dark:placeholder-slate-400"/>
           </div>
 
           {/* Size / Segment / Delivery */}
@@ -179,7 +179,7 @@ function Select<T extends string | number>({
       <select
         value={value as any}
         onChange={e => onChange((isNaN(Number(e.target.value)) ? e.target.value : Number(e.target.value)) as T)}
-        className="rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 dark:border-slate-700 dark:bg-slate-950"
+        className="rounded-xl border px-4 py-3 outline-none focus:ring-2 focus:ring-blue-600 bg-white text-slate-900 border-slate-300 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
       >
         {options.map(o => <option key={String(o.value)} value={o.value as any}>{o.label}</option>)}
       </select>
