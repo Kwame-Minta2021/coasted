@@ -30,7 +30,7 @@ export default function CoursesPage() {
       description: course.title, // Use title as description since description property doesn't exist
       ageGroup: course.id,
       skills: course.content.slice(0, 5),
-      duration: '6 months',
+      duration: '3 months',
       price: course.oneTime
     }
   }))
