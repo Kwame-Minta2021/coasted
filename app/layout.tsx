@@ -4,26 +4,33 @@ import ConditionalLayout from '@/components/ConditionalLayout'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { AuthProvider } from '@/lib/supabase/auth'
 import Script from 'next/script'
+import { generateMetadata as generateSEOMetadata, generateStructuredData } from '@/lib/seo'
 
 export const metadata: Metadata = {
-  title: 'Coasted Code – Hybrid AI, Robotics & Coding School',
-  description: 'Live online classes (Google Meet), in-person labs, and on-demand content for ages 6–17.',
-  metadataBase: new URL(process.env.SITE_URL || 'http://localhost:3000'),
+  ...generateSEOMetadata({
+    title: 'Coasted Code – Hybrid AI, Robotics & Coding School',
+    description: 'Empowering students aged 6-17 with cutting-edge technology education through live online classes, in-person labs, and AI-powered personalized learning experiences.',
+    keywords: [
+      'coding school Ghana',
+      'programming for kids',
+      'AI education Africa',
+      'robotics for children',
+      'STEM education Ghana',
+      'online coding classes',
+      'technology education',
+      'youth programming',
+      'digital literacy',
+      'computer science for kids'
+    ],
+  }),
   manifest: '/manifest.json',
   icons: {
     icon: '/icon.svg',
     apple: '/logo1.png',
   },
-  openGraph: {
-    title: 'Coasted Code – Hybrid AI, Robotics & Coding School',
-    description: 'Empowering students aged 6-17 with cutting-edge technology education',
-    type: 'website',
-    locale: 'en_US',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Coasted Code – Hybrid AI, Robotics & Coding School',
-    description: 'Empowering students aged 6-17 with cutting-edge technology education',
+  other: {
+    'msapplication-TileColor': '#3b82f6',
+    'theme-color': '#3b82f6',
   },
 }
 
@@ -35,8 +42,32 @@ export const viewport = {
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const organizationStructuredData = generateStructuredData({
+    type: 'EducationalOrganization',
+    data: {}
+  })
+
+  const websiteStructuredData = generateStructuredData({
+    type: 'WebSite',
+    data: {}
+  })
+
   return (
     <html lang="en">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(organizationStructuredData),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteStructuredData),
+          }}
+        />
+      </head>
       <body suppressHydrationWarning>
         <ThemeProvider>
           <AuthProvider>

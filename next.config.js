@@ -21,7 +21,7 @@ const nextConfig = {
   // Compression
   compress: true,
   
-  // Headers for caching
+  // Headers for caching and SEO
   async headers() {
     return [
       {
@@ -39,6 +39,10 @@ const nextConfig = {
             key: 'X-XSS-Protection',
             value: '1; mode=block',
           },
+          {
+            key: 'Referrer-Policy',
+            value: 'origin-when-cross-origin',
+          },
         ],
       },
       {
@@ -47,6 +51,24 @@ const nextConfig = {
           {
             key: 'Cache-Control',
             value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+      {
+        source: '/sitemap.xml',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400',
+          },
+        ],
+      },
+      {
+        source: '/robots.txt',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=86400, s-maxage=86400',
           },
         ],
       },

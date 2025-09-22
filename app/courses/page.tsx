@@ -2,15 +2,48 @@ import { Metadata } from 'next'
 import { COURSES } from '../(data)/courses';
 import Link from 'next/link';
 import { CheckCircle, Star, Users, Clock, Award, Sparkles } from 'lucide-react';
+import { generateMetadata as generateSEOMetadata, generateStructuredData } from '@/lib/seo';
 
-export const metadata: Metadata = {
-  title: 'Courses & Enrollment - Coasted Code',
-  description: 'Choose your learning track: Ages 6-17. One-time enrollment ₵800 + ₵299/month. Pay securely via Mobile Money or Bank.',
-}
+export const metadata: Metadata = generateSEOMetadata({
+  title: 'Coding Courses for Kids & Teens - Ages 6-17',
+  description: 'Comprehensive coding courses for children and teenagers. Learn programming, AI, and robotics with age-appropriate curriculum. Flexible pricing: ₵650-₵800 enrollment + ₵200-₵299/month.',
+  keywords: [
+    'coding courses for kids',
+    'programming classes children',
+    'STEM education Ghana',
+    'coding curriculum ages 6-17',
+    'online programming courses',
+    'robotics classes kids',
+    'AI education children',
+    'computer science for teens',
+    'coding bootcamp kids',
+    'technology education Ghana'
+  ],
+  url: '/courses'
+})
 
 export default function CoursesPage() {
+  const courseStructuredData = COURSES.map(course => generateStructuredData({
+    type: 'Course',
+    data: {
+      name: course.title,
+      description: course.description,
+      ageGroup: course.id,
+      skills: course.content.slice(0, 5),
+      duration: '6 months',
+      price: course.oneTime
+    }
+  }))
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(courseStructuredData),
+        }}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Hero Section */}
       <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/20">
         <div className="container mx-auto px-6 py-16">
@@ -192,6 +225,7 @@ export default function CoursesPage() {
           </div>
         </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
