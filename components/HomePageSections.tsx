@@ -125,21 +125,39 @@ const testimonials = [
     role: "Parent",
     content: "My daughter has learned so much through Coasted Code. The AI-powered learning makes it fun and engaging!",
     rating: 5,
-    avatar: "👩‍👧"
+    avatar: "👩‍👧",
+    recommendation: "Start with 15-minute daily coding sessions. Use the AI tutor to ask questions when stuck. Join the parent community for support.",
+    actionable: [
+      "Set up a dedicated coding space at home",
+      "Use the progress tracking to celebrate small wins",
+      "Attend the weekly parent orientation sessions"
+    ]
   },
   {
     name: "Michael Nyini",
     role: "Student",
     content: "The robotics classes are amazing! I've built my own robot and learned Python programming.",
     rating: 5,
-    avatar: "👨‍🎓"
+    avatar: "👨‍🎓",
+    recommendation: "Practice coding for 30 minutes daily. Start with simple projects before moving to complex ones. Share your creations with friends!",
+    actionable: [
+      "Complete one coding challenge per day",
+      "Build a new project every weekend",
+      "Join the student Discord for peer support"
+    ]
   },
   {
     name: "Emma Minta",
     role: "Parent",
     content: "The mentors are incredible and my son has gained so much confidence in his coding abilities.",
     rating: 5,
-    avatar: "👩‍👦"
+    avatar: "👩‍👦",
+    recommendation: "Encourage your child to teach you what they learn. This reinforces their knowledge and builds confidence. Don't worry if you don't understand everything!",
+    actionable: [
+      "Ask your child to explain their projects to you",
+      "Schedule regular check-ins with mentors",
+      "Create a portfolio of their completed projects"
+    ]
   }
 ];
 
@@ -399,10 +417,10 @@ export function TestimonialsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-            What Parents & Students Say
+            Success Stories & Actionable Tips
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            Real feedback from our community of learners and families.
+            Real feedback from our community with practical recommendations you can implement today.
           </p>
         </motion.div>
 
@@ -427,7 +445,7 @@ export function TestimonialsSection() {
               }}
               className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300"
             >
-              <div className="text-center">
+              <div className="text-center mb-6">
                 <div className="text-4xl mb-4">{testimonial.avatar}</div>
                 <div className="flex justify-center mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
@@ -437,13 +455,36 @@ export function TestimonialsSection() {
                 <blockquote className="text-slate-700 dark:text-slate-300 mb-6 italic leading-relaxed">
                   "{testimonial.content}"
                 </blockquote>
-                <div>
+                <div className="mb-6">
                   <div className="font-bold text-slate-900 dark:text-white">
                     {testimonial.name}
                   </div>
                   <div className="text-slate-600 dark:text-slate-400 text-sm">
                     {testimonial.role}
                   </div>
+                </div>
+              </div>
+              
+              {/* Actionable Recommendations */}
+              <div className="border-t border-slate-200 dark:border-slate-700 pt-6">
+                <h4 className="font-semibold text-slate-900 dark:text-white mb-3 text-sm">
+                  💡 {testimonial.role === 'Parent' ? 'Parent Tip' : 'Student Advice'}
+                </h4>
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
+                  {testimonial.recommendation}
+                </p>
+                <div className="space-y-2">
+                  <h5 className="font-medium text-slate-800 dark:text-slate-200 text-xs uppercase tracking-wide">
+                    Action Steps:
+                  </h5>
+                  {testimonial.actionable.map((action, actionIndex) => (
+                    <div key={actionIndex} className="flex items-start space-x-2">
+                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
+                        {action}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </motion.div>
