@@ -27,7 +27,7 @@ export default function CoursesPage() {
     type: 'Course',
     data: {
       name: course.title,
-      description: course.description,
+      description: course.title, // Use title as description since description property doesn't exist
       ageGroup: course.id,
       skills: course.content.slice(0, 5),
       duration: '6 months',
