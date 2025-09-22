@@ -239,7 +239,7 @@ html, body {
 /* Enhanced form elements */
 .cc-input {
   @apply rounded-xl border px-4 py-3 text-sm transition-all duration-300 focus:ring-2 focus:ring-offset-0;
-  background-color: white;
+  background-color: hsl(var(--card));
   border-color: hsl(var(--border));
   color: hsl(var(--foreground));
 }

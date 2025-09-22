@@ -213,7 +213,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.7 }}
-            className="text-lg lg:text-xl text-slate-500 dark:text-slate-500 max-w-3xl mx-auto mb-12"
+            className="text-lg lg:text-xl text-slate-600 dark:text-slate-300 max-w-3xl mx-auto mb-12"
           >
             Empowering students aged 6-17 with cutting-edge technology education through  online classes, 
             in-person labs, and AI-powered personalized learning experiences.

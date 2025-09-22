@@ -112,9 +112,19 @@ export default function CoursesPage() {
                       </div>
                     ))}
                     {course.content.length > 4 && (
-                      <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                        +{course.content.length - 4} more topics
-                      </div>
+                      <details className="group">
+                        <summary className="text-sm text-blue-600 dark:text-blue-400 font-medium cursor-pointer list-none select-none">
+                          +{course.content.length - 4} more topics
+                        </summary>
+                        <div className="mt-2 space-y-2">
+                          {course.content.slice(4).map((item, idx) => (
+                            <div key={`more-${idx}`} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+                              <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+                              <span>{item}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </details>
                     )}
                   </div>
                 </div>

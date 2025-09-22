@@ -27,7 +27,7 @@ export default function Home() {
   const y = useTransform(scrollY, [0, 1000], [0, -200]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Animated Background Elements */}
       <motion.div 
         style={{ y }}
