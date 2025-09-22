@@ -1,6 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import Logo from './Logo'
 import ThemeToggle from './ThemeToggle'
 import { Menu, X } from 'lucide-react'
@@ -8,7 +9,7 @@ import { Menu, X } from 'lucide-react'
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isClient, setIsClient] = useState(false)
-  const [pathname, setPathname] = useState('')
+  const pathname = usePathname()
   
   // Ensure consistent href for student login - always use /student-login to avoid hydration mismatch
   // This must be consistent between server and client to prevent hydration errors
@@ -17,9 +18,6 @@ export default function Navbar() {
 
   useEffect(() => {
     setIsClient(true)
-    // Set pathname only on client side to prevent hydration mismatch
-    const currentPath = window.location.pathname
-    setPathname(currentPath)
   }, [])
 
   const toggleMobileMenu = () => {
@@ -31,9 +29,13 @@ export default function Navbar() {
   }
 
   const isActive = (path: string) => {
+    if (!pathname) return false
+    
     if (path === '/') {
       return pathname === '/'
     }
+    // For other paths, check if current pathname starts with the path
+    // This handles nested routes like /courses/something
     return pathname.startsWith(path)
   }
 
