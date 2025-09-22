@@ -135,7 +135,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
   // Show loading while checking authentication or during hydration
   if (!isClient || !authInitialized || !user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-slate-600 dark:text-slate-400">Loading...</p>
@@ -145,7 +145,7 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
   }
 
   return (
-    <div suppressHydrationWarning className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div suppressHydrationWarning className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Student Portal Layout with Sidebar */}
       <div className="flex h-screen">
         {/* Desktop Sidebar */}

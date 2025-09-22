@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function CoursesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Hero Section */}
       <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/20">
         <div className="container mx-auto px-6 py-16">
@@ -67,9 +67,9 @@ export default function CoursesPage() {
               <div className="p-8 pb-6">
                 <div className="flex items-center gap-3 mb-4">
                   <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white text-xl font-bold ${
-                    index === 0 ? 'bg-gradient-to-br from-purple-500 to-pink-500' :
-                    index === 1 ? 'bg-gradient-to-br from-blue-500 to-cyan-500' :
-                    'bg-gradient-to-br from-green-500 to-emerald-500'
+                    index === 0 ? 'bg-gradient-to-br from-blue-500 to-purple-500' :
+                    index === 1 ? 'bg-gradient-to-br from-purple-500 to-indigo-500' :
+                    'bg-gradient-to-br from-indigo-500 to-blue-500'
                   }`}>
                     {index === 0 ? '🎨' : index === 1 ? '🤖' : '🚀'}
                   </div>

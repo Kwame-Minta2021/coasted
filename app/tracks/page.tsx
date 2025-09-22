@@ -89,14 +89,14 @@ export default function TracksPage() {
   );
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Hero Section */}
       <Section className="relative overflow-hidden pb-0 pt-20">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute -left-32 -top-32 h-96 w-96 rounded-full bg-gradient-to-br from-blue-400/20 to-purple-400/20 blur-3xl animate-float-slow" />
-          <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-gradient-to-br from-emerald-400/20 to-cyan-400/20 blur-3xl animate-float-medium" />
-          <div className="absolute left-1/2 bottom-0 h-64 w-64 rounded-full bg-gradient-to-br from-pink-400/20 to-orange-400/20 blur-3xl animate-float-fast" />
+          <div className="absolute -right-32 top-1/3 h-96 w-96 rounded-full bg-gradient-to-br from-purple-400/20 to-indigo-400/20 blur-3xl animate-float-medium" />
+          <div className="absolute left-1/2 bottom-0 h-64 w-64 rounded-full bg-gradient-to-br from-indigo-400/20 to-blue-400/20 blur-3xl animate-float-fast" />
         </div>
         
         <div className="relative z-10 text-center">

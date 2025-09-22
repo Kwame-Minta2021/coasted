@@ -64,7 +64,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
           transition={{ duration: 0.35 }}
           className="h-max rounded-3xl border bg-white p-4 dark:border-slate-800 dark:bg-slate-900"
         >
-          <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-emerald-600 p-4 text-white">
+          <div className="rounded-2xl bg-gradient-to-br from-blue-600 to-purple-600 p-4 text-white">
             <div className="text-sm opacity-90">Welcome</div>
             <div className="mt-1 font-semibold">{studentName}</div>
             <div className="text-xs opacity-90">{student?.email || 'Signed in'}</div>

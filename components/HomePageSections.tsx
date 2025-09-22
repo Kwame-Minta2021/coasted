@@ -185,7 +185,7 @@ export function HeroSection() {
             <motion.div 
               whileHover={{ rotate: 360, scale: 1.1 }}
               transition={{ duration: 0.6 }}
-              className="w-24 h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl flex items-center justify-center shadow-2xl"
+              className="w-24 h-24 bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 rounded-3xl flex items-center justify-center shadow-2xl"
             >
               <Code className="w-12 h-12 text-white" />
             </motion.div>
@@ -470,7 +470,7 @@ export function CTASection() {
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
           whileHover={{ scale: 1.02 }}
-          className="bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 rounded-3xl p-12 text-white shadow-2xl"
+          className="bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-500 rounded-3xl p-12 text-white shadow-2xl"
         >
           <motion.h2 
             initial={{ opacity: 0, y: 30 }}

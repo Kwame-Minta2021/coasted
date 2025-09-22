@@ -122,10 +122,10 @@ export default function TrackDetailPage({ params }: { params: Promise<{ slug: st
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-800">
       {/* Hero Section */}
       <section className="relative overflow-hidden pt-20 pb-16">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-purple-500/10 to-emerald-500/10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-indigo-500/10" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -194,7 +194,7 @@ export default function TrackDetailPage({ params }: { params: Promise<{ slug: st
               className="relative"
             >
                              <div className="relative rounded-3xl overflow-hidden shadow-2xl">
-                 <div className="w-full h-96 bg-gradient-to-br from-primary/20 via-purple-500/20 to-emerald-500/20" />
+                 <div className="w-full h-96 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-indigo-500/20" />
                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                </div>
             </motion.div>
@@ -290,7 +290,7 @@ export default function TrackDetailPage({ params }: { params: Promise<{ slug: st
 
                 {/* Pricing and Enrollment */}
                 <div className="lg:pl-8">
-                  <div className="bg-gradient-to-br from-primary/10 via-purple-500/10 to-emerald-500/10 rounded-3xl p-8 border border-primary/20">
+                  <div className="bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-3xl p-8 border border-blue-500/20">
                     <div className="text-center mb-8">
                       <div className="text-4xl font-bold bg-gradient-to-r from-primary to-purple-600 bg-clip-text text-transparent mb-2">
                         GHS {selectedModeData.price.toLocaleString()}
@@ -367,7 +367,7 @@ export default function TrackDetailPage({ params }: { params: Promise<{ slug: st
       )}
 
       {/* Course Modules */}
-      <section className="py-16 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-slate-900 dark:to-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Course Curriculum</h2>
@@ -417,7 +417,7 @@ export default function TrackDetailPage({ params }: { params: Promise<{ slug: st
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="bg-gradient-to-br from-primary/5 via-purple-500/5 to-emerald-500/5 rounded-2xl p-6 border border-primary/10"
+                className="bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-indigo-500/5 rounded-2xl p-6 border border-blue-500/10"
               >
                 <div className="flex items-center gap-3 mb-3">
                   <Star className="h-5 w-5 text-primary" />

@@ -20,7 +20,7 @@ function EnrollContent() {
   const selectedCourse = useMemo(() => COURSES.find(c => c.id === defaultAge), [defaultAge]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       {/* Header */}
       <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl border-b border-white/20 dark:border-slate-700/20">
         <div className="container mx-auto px-4 sm:px-6 py-4 sm:py-8">
