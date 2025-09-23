@@ -59,11 +59,14 @@ export default function StudentLayout({ children }: { children: React.ReactNode 
       }
 
       try {
+        // Try matching either primary email or parent_email
         const { data: enrollment, error } = await supabase
           .from('enrollments')
-          .select('child_name')
-          .eq('email', user.email)
-          .single();
+          .select('child_name, email, parent_email')
+          .or(`email.eq.${user.email},parent_email.eq.${user.email}`)
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
         if (enrollment && !error) {
           setStudentName(enrollment.child_name || user.user_metadata?.full_name || user.email?.split('@')[0] || 'Student');

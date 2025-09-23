@@ -36,9 +36,11 @@ export default function DashboardShell({ children }: { children: React.ReactNode
       try {
         const { data: enrollment, error } = await supabase
           .from('enrollments')
-          .select('child_name')
-          .eq('email', user.email)
-          .single();
+          .select('child_name, email, parent_email')
+          .or(`email.eq.${user.email},parent_email.eq.${user.email}`)
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
         if (enrollment && !error) {
           setStudentName(enrollment.child_name || (user as any).displayName || user.email?.split('@')[0] || 'Student');

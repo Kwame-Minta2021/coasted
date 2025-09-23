@@ -30,9 +30,11 @@ export function useStudentName() {
 
         const { data: enrollment, error: enrollmentError } = await supabase
           .from('enrollments')
-          .select('child_name, parent_name, age_band, course_enrolled')
-          .eq('email', user.email)
-          .single();
+          .select('child_name, parent_name, age_band, course_enrolled, email, parent_email')
+          .or(`email.eq.${user.email},parent_email.eq.${user.email}`)
+          .order('updated_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
         if (enrollmentError) {
           console.error('Error fetching enrollment data:', enrollmentError);

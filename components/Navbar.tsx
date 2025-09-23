@@ -29,7 +29,8 @@ export default function Navbar() {
   }
 
   const isActive = (path: string) => {
-    if (!pathname) return false
+    // Only check active state on client to prevent hydration mismatch
+    if (!isClient || !pathname) return false
     
     if (path === '/') {
       return pathname === '/'
@@ -40,7 +41,7 @@ export default function Navbar() {
   }
 
   return (
-    <header className="sticky top-4 z-50 transition-all duration-300 bg-white/60 cc-glass dark:bg-slate-900/60 rounded-2xl mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <header className="sticky top-4 z-50 transition-all duration-300 bg-white/30 cc-glass dark:bg-slate-900/60 rounded-2xl mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="flex h-16 items-center justify-between">
         {/* Logo */}
         <Link 
