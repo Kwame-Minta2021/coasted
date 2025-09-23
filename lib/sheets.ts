@@ -113,7 +113,8 @@ export async function fetchCoursesFromSheet(): Promise<Course[]> {
   // Ensure we always return 4 items for a premium look
   if (courses.length < 4) {
     const have = new Set(courses.map(c => c.id))
-    const padded = SAMPLE_4.filter(s => !have.has(s.id)).slice(0, 4 - courses.length)
+    const neededCount = Math.max(0, 4 - courses.length)
+    const padded = SAMPLE_4.filter(s => !have.has(s.id)).slice(0, neededCount)
     return courses.concat(padded)
   }
 

@@ -430,7 +430,7 @@ export function TestimonialsSection() {
               <div className="text-center mb-6">
                 <div className="text-4xl mb-4">{testimonial.avatar}</div>
                 <div className="flex justify-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
+                  {Array.from({ length: Math.round(Number(testimonial.rating)) }).map((_, i) => (
                     <Star key={i} className="w-5 h-5 text-yellow-500 fill-current" />
                   ))}
                 </div>
