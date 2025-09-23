@@ -125,24 +125,21 @@ const testimonials = [
     role: "Parent",
     content: "My daughter has learned so much through Coasted Code. The AI-powered learning makes it fun and engaging!",
     rating: 5,
-    avatar: "👩‍👧",
-   
+    avatar: "👩‍👧"
   },
   {
     name: "Michael Nyini",
     role: "Student",
     content: "The robotics classes are amazing! I've built my own robot and learned Python programming.",
     rating: 5,
-    avatar: "👨‍🎓",
-    
+    avatar: "👨‍🎓"
   },
   {
     name: "Emma Minta",
     role: "Parent",
     content: "The mentors are incredible and my son has gained so much confidence in his coding abilities.",
     rating: 4.5,
-    avatar: "👩‍👦",
-    
+    avatar: "👩‍👦"
   }
 ];
 
@@ -402,10 +399,10 @@ export function TestimonialsSection() {
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-            Success Stories & Actionable Tips
+            Success Stories
           </h2>
           <p className="text-xl text-slate-600 dark:text-slate-400">
-            Real feedback from our community with practical recommendations you can implement today.
+            Real feedback from our community of students and parents.
           </p>
         </motion.div>
 
@@ -450,28 +447,6 @@ export function TestimonialsSection() {
                 </div>
               </div>
               
-              {/* Actionable Recommendations */}
-              <div className="border-t border-slate-200 dark:border-slate-700 pt-6">
-                <h4 className="font-semibold text-slate-900 dark:text-white mb-3 text-sm">
-                  💡 {testimonial.role === 'Parent' ? 'Parent Tip' : 'Student Advice'}
-                </h4>
-                <p className="text-slate-600 dark:text-slate-400 text-sm mb-4 leading-relaxed">
-                  {testimonial.recommendation}
-                </p>
-                <div className="space-y-2">
-                  <h5 className="font-medium text-slate-800 dark:text-slate-200 text-xs uppercase tracking-wide">
-                    Action Steps:
-                  </h5>
-                  {testimonial.actionable.map((action, actionIndex) => (
-                    <div key={actionIndex} className="flex items-start space-x-2">
-                      <div className="w-1.5 h-1.5 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
-                      <span className="text-slate-600 dark:text-slate-400 text-xs leading-relaxed">
-                        {action}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
             </motion.div>
           ))}
         </motion.div>
