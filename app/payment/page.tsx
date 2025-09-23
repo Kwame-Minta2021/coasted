@@ -14,6 +14,20 @@ function PaymentContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
+  // Calculate the correct amount based on age band
+  const getAmountByAgeBand = (ageBand: string): number => {
+    switch (ageBand) {
+      case '6-9': return 650;
+      case '10-13': return 750;
+      case '14-17': return 800;
+      default: return 800;
+    }
+  };
+
+  const getCorrectAmount = () => {
+    return enrollmentData?.paymentAmount || getAmountByAgeBand(enrollmentData?.ageBand || '14-17');
+  };
+
   useEffect(() => {
     const enrollmentId = searchParams.get('enrollmentId');
     
@@ -114,7 +128,7 @@ function PaymentContent() {
       const config: PaystackConfig = {
         key: PAYSTACK_PUBLIC_KEY,
         email: enrollmentData.parentEmail || enrollmentData.data?.parentEmail,
-        amount: (enrollmentData.paymentAmount || enrollmentData.data?.paymentAmount || 0) * 100, // Convert to kobo (smallest currency unit)
+        amount: getCorrectAmount() * 100, // Convert to kobo (smallest currency unit)
         currency: 'GHS',
         ref: enrollmentData.enrollmentId || enrollmentData.data?.enrollmentId,
         callback: function(response: PaystackResponse) {
@@ -231,7 +245,7 @@ function PaymentContent() {
                 <div className="border-t pt-3 mt-3">
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total Amount:</span>
-                    <span className="text-2xl font-bold text-primary">GHS {enrollmentData?.paymentAmount || 750}</span>
+                    <span className="text-2xl font-bold text-primary">GHS {getCorrectAmount()}</span>
                   </div>
                 </div>
               </div>

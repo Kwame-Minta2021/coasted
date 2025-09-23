@@ -73,6 +73,19 @@ function CallbackContent() {
     }
   };
 
+  const getAmountByAgeBand = (ageBand: string): number => {
+    switch (ageBand) {
+      case '6-9': return 650;
+      case '10-13': return 750;
+      case '14-17': return 800;
+      default: return 800;
+    }
+  };
+
+  const getCorrectAmount = () => {
+    return enrollmentData?.amount || getAmountByAgeBand(enrollmentData?.ageBand || '14-17');
+  };
+
   if (status === 'loading') {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 flex items-center justify-center">
@@ -194,7 +207,7 @@ function CallbackContent() {
                       </div>
                       <div>
                         <p className="text-sm text-slate-500 dark:text-slate-400">Payment Amount</p>
-                        <p className="font-bold text-green-600 dark:text-green-400 text-lg">₵800</p>
+                        <p className="font-bold text-green-600 dark:text-green-400 text-lg">₵{getCorrectAmount()}</p>
                       </div>
                     </div>
                   </div>

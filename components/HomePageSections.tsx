@@ -126,12 +126,7 @@ const testimonials = [
     content: "My daughter has learned so much through Coasted Code. The AI-powered learning makes it fun and engaging!",
     rating: 5,
     avatar: "👩‍👧",
-    recommendation: "Start with 15-minute daily coding sessions. Use the AI tutor to ask questions when stuck. Join the parent community for support.",
-    actionable: [
-      "Set up a dedicated coding space at home",
-      "Use the progress tracking to celebrate small wins",
-      "Attend the weekly parent orientation sessions"
-    ]
+   
   },
   {
     name: "Michael Nyini",
@@ -139,25 +134,15 @@ const testimonials = [
     content: "The robotics classes are amazing! I've built my own robot and learned Python programming.",
     rating: 5,
     avatar: "👨‍🎓",
-    recommendation: "Practice coding for 30 minutes daily. Start with simple projects before moving to complex ones. Share your creations with friends!",
-    actionable: [
-      "Complete one coding challenge per day",
-      "Build a new project every weekend",
-      "Join the student Discord for peer support"
-    ]
+    
   },
   {
     name: "Emma Minta",
     role: "Parent",
     content: "The mentors are incredible and my son has gained so much confidence in his coding abilities.",
-    rating: 5,
+    rating: 4.5,
     avatar: "👩‍👦",
-    recommendation: "Encourage your child to teach you what they learn. This reinforces their knowledge and builds confidence. Don't worry if you don't understand everything!",
-    actionable: [
-      "Ask your child to explain their projects to you",
-      "Schedule regular check-ins with mentors",
-      "Create a portfolio of their completed projects"
-    ]
+    
   }
 ];
 

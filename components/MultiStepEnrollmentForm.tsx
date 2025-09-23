@@ -36,6 +36,15 @@ const ageBands = [
   { value: '14-17', label: 'Ages 14–17 · Innovate & Launch' },
 ];
 
+const getAmountByAgeBand = (ageBand: string): number => {
+  switch (ageBand) {
+    case '6-9': return 650;
+    case '10-13': return 750;
+    case '14-17': return 800;
+    default: return 800;
+  }
+};
+
 export default function MultiStepEnrollmentForm() {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
@@ -292,7 +301,7 @@ export default function MultiStepEnrollmentForm() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Enrollment Fee:</span>
-                  <span className="font-bold text-green-600 dark:text-green-400">₵800</span>
+                  <span className="font-bold text-green-600 dark:text-green-400">₵{getAmountByAgeBand(form.ageBand)}</span>
                 </div>
               </div>
             </div>
@@ -348,7 +357,7 @@ export default function MultiStepEnrollmentForm() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600 dark:text-slate-400">Enrollment Fee:</span>
-                  <span className="font-bold text-green-600 dark:text-green-400">₵800</span>
+                  <span className="font-bold text-green-600 dark:text-green-400">₵{getAmountByAgeBand(form.ageBand)}</span>
                 </div>
               </div>
             </div>
@@ -469,7 +478,7 @@ export default function MultiStepEnrollmentForm() {
               ) : (
                 <>
                   <CreditCard className="w-4 h-4" />
-                  Pay ₵800 & Complete
+                  Pay ₵{getAmountByAgeBand(form.ageBand)} & Complete
                 </>
               )}
             </button>

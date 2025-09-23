@@ -126,7 +126,7 @@ export async function POST(request) {
         age_band: ageBand,
         course_enrolled: 'Coasted Code Course',
         payment_reference: paymentReference,
-        amount: 800, // Default amount
+        amount: ageBand === '6-9' ? 650 : ageBand === '10-13' ? 750 : 800, // Age-based amount
         currency: 'GHS',
         status: 'completed',
         enrollment_date: new Date().toISOString(),

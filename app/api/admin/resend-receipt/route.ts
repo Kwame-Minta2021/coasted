@@ -21,6 +21,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Enrollment not found' }, { status: 404 });
     }
     
+    // Calculate the correct amount based on age band if amount is missing or incorrect
+    const getAmountByAgeBand = (ageBand: string): number => {
+      switch (ageBand) {
+        case '6-9': return 650;
+        case '10-13': return 750;
+        case '14-17': return 800;
+        default: return 800;
+      }
+    };
+    
+    const correctAmount = enrollment?.amount || getAmountByAgeBand(enrollment?.age_band || '14-17');
+    
     // TODO: Implement actual email sending using your email provider (Resend/Mailgun/SendGrid)
     // For now, just log the receipt request
     console.log('Receipt request for:', {
@@ -28,7 +40,8 @@ export async function POST(req: NextRequest) {
       parentEmail: enrollment?.parentEmail,
       parentName: enrollment?.parentName,
       childName: enrollment?.childName,
-      amount: '₵800',
+      amount: `₵${correctAmount}`,
+      ageBand: enrollment?.age_band,
       paidAt: enrollment?.paidAt
     });
 
