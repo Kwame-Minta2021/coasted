@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import Section from '@/components/Section';
 import { PaystackConfig, PaystackResponse } from '@/types/paystack';
 
-const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_test_b3d51d00d4f05527cc380d0c09de96e9e5ead8a1';
+// Require a configured public key; do not fall back to a test key
+const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as string | undefined;
 
 function PaymentContent() {
   const [enrollmentData, setEnrollmentData] = useState<any>(null);

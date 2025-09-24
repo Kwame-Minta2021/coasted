@@ -36,11 +36,11 @@ export async function POST(req: NextRequest) {
       site: site
     });
 
-    if (!secret) {
+    if (!secret || secret.startsWith('sk_test')) {
       console.error('PAYSTACK_SECRET_KEY not configured')
       return NextResponse.json({ 
-        error: 'PAYSTACK_SECRET_KEY is missing in environment variables',
-        details: 'Please add PAYSTACK_SECRET_KEY=sk_test_26685143fe5bcfe4206b7ae0b630ccdec2bcac07 to Vercel environment variables'
+        error: 'PAYSTACK_SECRET_KEY is missing or using test key',
+        details: 'Set PAYSTACK_SECRET_KEY to your LIVE secret key in environment variables'
       }, { status: 500 })
     }
 
