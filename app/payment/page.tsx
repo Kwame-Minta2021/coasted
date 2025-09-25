@@ -11,6 +11,7 @@ const PAYSTACK_PUBLIC_KEY = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY as strin
 function PaymentContent() {
   const [enrollmentData, setEnrollmentData] = useState<any>(null);
   const [status, setStatus] = useState<'loading' | 'processing' | 'success' | 'error'>('loading');
+  const [phone, setPhone] = useState<string>('');
   const [paystackLoaded, setPaystackLoaded] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -76,6 +77,9 @@ function PaymentContent() {
         
         const data = await response.json();
         setEnrollmentData(data);
+        // Prefill editable phone field from enrollment (fallback to empty)
+        const initialPhone = (data?.parentPhone || data?.data?.parentPhone || '').toString();
+        setPhone(initialPhone);
         
         // Load Paystack script after enrollment data is fetched
         await loadPaystackScript();
@@ -110,80 +114,36 @@ function PaymentContent() {
       return;
     }
 
-    if (!window.PaystackPop) {
-      console.error('Paystack not loaded');
-      setStatus('error');
-      return;
-    }
-
-    if (!PAYSTACK_PUBLIC_KEY || PAYSTACK_PUBLIC_KEY.includes('your_')) {
-      console.error('Invalid Paystack public key');
-      setStatus('error');
-      return;
-    }
+    // We now use server-side initialization; no inline.js or public key required here
 
     setStatus('processing');
 
     try {
-      // Initialize Paystack payment
-      const config: PaystackConfig = {
-        key: PAYSTACK_PUBLIC_KEY,
-        email: enrollmentData.parentEmail || enrollmentData.data?.parentEmail,
-        amount: getCorrectAmount() * 100, // Convert to kobo (smallest currency unit)
-        currency: 'GHS',
-        ref: enrollmentData.enrollmentId || enrollmentData.data?.enrollmentId,
-        callback: function(response: PaystackResponse) {
-          // Payment successful
-          console.log('Payment successful:', response);
-          
-          // Update enrollment status to active
-          fetch('/api/enroll/update-status', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              enrollmentId: enrollmentData.enrollmentId || enrollmentData.data?.enrollmentId,
-              status: 'active',
-              paymentReference: response.reference,
-              paymentStatus: 'completed'
-            })
-          })
-          .then(updateResponse => {
-            if (updateResponse.ok) {
-              setStatus('success');
-              
-              // Redirect to dashboard after successful payment
-              setTimeout(() => {
-                const params = new URLSearchParams({
-                  enrollmentId: enrollmentData?.enrollmentId || enrollmentData?.data?.enrollmentId || '',
-                  studentName: enrollmentData?.studentName || enrollmentData?.data?.studentName || '',
-                  courseTitle: enrollmentData?.courseTitle || enrollmentData?.data?.courseTitle || '',
-                  courseId: enrollmentData?.courseId || enrollmentData?.data?.courseId || '',
-                  parentEmail: enrollmentData?.parentEmail || enrollmentData?.data?.parentEmail || '',
-                  paymentComplete: 'true',
-                  newEnrollment: 'true'
-                });
-                router.push(`/dashboard?${params.toString()}`);
-              }, 2000);
-            } else {
-              throw new Error('Failed to update enrollment status');
-            }
-          })
-          .catch(error => {
-            console.error('Error updating enrollment status:', error);
-            setStatus('error');
-          });
-        },
-        onClose: function() {
-          // Payment cancelled
-          console.log('Payment cancelled');
-          setStatus('loading');
-        }
-      };
+      // Initialize on server to enforce LIVE key and mobile money channels
+      const initRes = await fetch('/api/paystack/initialize', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: enrollmentData.parentEmail || enrollmentData.data?.parentEmail,
+          phone: phone,
+          ageBand: enrollmentData.ageBand || enrollmentData.data?.ageBand,
+          parentName: enrollmentData.parentName || enrollmentData.data?.parentName,
+          childName: enrollmentData.studentName || enrollmentData.data?.studentName,
+          amountGhs: getCorrectAmount()
+        })
+      });
 
-      const handler = window.PaystackPop.setup(config);
-      handler.openIframe();
+      const initJson = await initRes.json();
+      if (!initRes.ok || !initJson.authorization_url) {
+        console.error('Server init failed:', initJson);
+        setStatus('error');
+        return;
+      }
+
+      // Redirect to Paystack checkout (supports direct mobile money entry)
+      window.location.href = initJson.authorization_url;
     } catch (error) {
-      console.error('Payment error:', error);
+      console.error('Payment init error:', error);
       setStatus('error');
     }
   };
@@ -250,6 +210,24 @@ function PaymentContent() {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Editable Mobile Money Number */}
+            <div className="mb-6">
+              <label htmlFor="mm-phone" className="block text-sm font-medium text-muted-foreground mb-2">
+                Mobile Money Number (You can edit before paying)
+              </label>
+              <input
+                id="mm-phone"
+                type="tel"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                placeholder="e.g. 0541234567"
+                className="w-full rounded-lg border px-3 py-2 outline-none focus:ring-2 focus:ring-primary/40"
+              />
+              <p className="mt-2 text-xs text-muted-foreground">
+                We’ll pass this number to Paystack so you can approve the Mobile Money charge.
+              </p>
             </div>
 
             {status === 'processing' && (

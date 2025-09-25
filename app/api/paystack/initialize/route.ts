@@ -10,11 +10,11 @@ export async function POST(req: NextRequest) {
     
     console.log('Request body:', { email, phone, ageBand, parentName, childName, amountGhs });
 
-    // Validate required fields
-    if (!email || !phone || !ageBand || !parentName || !childName || !amountGhs) {
-      console.error('Missing required fields:', { email, phone, ageBand, parentName, childName, amountGhs });
+    // Validate required fields (make names optional so we can initialize with just payer info)
+    if (!email || !phone || !amountGhs) {
+      console.error('Missing required fields:', { email, phone, amountGhs });
       return NextResponse.json({ 
-        error: 'Missing required fields' 
+        error: 'Missing required fields: email, phone, and amountGhs are required' 
       }, { status: 400 })
     }
 

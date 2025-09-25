@@ -163,7 +163,25 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
         setMessages(prev => [...prev, assistantMessage]);
       } else {
         console.error('Chatbot - API error:', data.error);
-        throw new Error(data.error || 'Failed to get response');
+        
+        // Handle fallback responses more gracefully
+        if (data.fallback) {
+          let fallbackContent = data.response || "I'm currently experiencing some technical difficulties. Please try again in a few moments, or feel free to contact our support team for immediate assistance. You can also check our FAQ section or browse through the course materials while I'm getting back online! 😊";
+          
+          if (data.quotaExceeded && !data.response) {
+            fallbackContent = "I've reached my daily limit for AI responses. Don't worry though! You can still:\n\n• Browse our course materials and modules\n• Check your assignments and progress\n• Contact our support team directly\n• Try again tomorrow when my quota resets\n\nI'm here to help in other ways while I recharge! 💪";
+          }
+          
+          const fallbackMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            role: 'assistant',
+            content: fallbackContent,
+            timestamp: new Date()
+          };
+          setMessages(prev => [...prev, fallbackMessage]);
+        } else {
+          throw new Error(data.error || 'Failed to get response');
+        }
       }
     } catch (error) {
       console.error('Error sending message:', error);

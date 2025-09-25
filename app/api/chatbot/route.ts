@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-const GEMINI_API_KEY = 'AIzaSyAcRqcSCjDbRFCxJR99QF2Jk4082WyoBcU';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent';
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || 'AIzaSyAcRqcSCjDbRFCxJR99QF2Jk4082WyoBcU';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-pro:generateContent';
 
 // Site knowledge base for context
 const SITE_CONTEXT = `
@@ -159,6 +159,80 @@ RESPONSE GUIDELINES:
 - Encourage asking follow-up questions
 `;
 
+// Helper function to generate fallback responses when AI is unavailable
+function generateFallbackResponse(message: string, pageContext?: string): string {
+  const lowerMessage = message.toLowerCase();
+  
+  // Common question patterns and responses
+  if (lowerMessage.includes('login') || lowerMessage.includes('sign in')) {
+    return "To log in to your Coasted Code account, go to the login page and enter your email and password. If you're having trouble, you can reset your password or contact our support team for assistance.";
+  }
+  
+  if (lowerMessage.includes('course') || lowerMessage.includes('module')) {
+    return "You can access your course materials by navigating to the 'Course Modules' section in your student dashboard. There you'll find all your lessons, exercises, and progress tracking.";
+  }
+  
+  if (lowerMessage.includes('assignment') || lowerMessage.includes('homework')) {
+    return "Check the 'Assignments' section in your dashboard to view and submit your assignments. Make sure to check the due dates and submission requirements.";
+  }
+  
+  if (lowerMessage.includes('progress') || lowerMessage.includes('grade')) {
+    return "Your progress and grades can be viewed in the Overview dashboard. You can also check individual sections like Modules, Projects, and Assignments for detailed progress tracking.";
+  }
+  
+  if (lowerMessage.includes('help') || lowerMessage.includes('support')) {
+    return "For immediate help, you can contact our support team through the Messages section or visit our FAQ. You can also reach out to your instructors directly.";
+  }
+  
+  if (lowerMessage.includes('schedule') || lowerMessage.includes('class')) {
+    return "Check the 'Schedule' section to see your upcoming classes, live sessions, and important deadlines. You'll receive notifications for upcoming events.";
+  }
+  
+  if (lowerMessage.includes('password') || lowerMessage.includes('account')) {
+    return "To manage your account settings, go to 'Account Settings' in your dashboard. You can change your password, update your profile, and manage your preferences there.";
+  }
+  
+  if (lowerMessage.includes('payment') || lowerMessage.includes('enroll') || lowerMessage.includes('fee')) {
+    return "For enrollment and payment information, visit our enrollment page or contact our support team. We offer flexible payment options and age-appropriate pricing for students aged 6-17.";
+  }
+  
+  if (lowerMessage.includes('instructor') || lowerMessage.includes('teacher')) {
+    return "You can communicate with your instructors through the Messages section. They're available to help with questions, provide feedback, and guide your learning journey.";
+  }
+  
+  if (lowerMessage.includes('project') || lowerMessage.includes('coding')) {
+    return "Check the 'Projects' section to work on hands-on coding projects. You'll find beginner, intermediate, and advanced projects to build your skills and create a portfolio.";
+  }
+  
+  // Default helpful response
+  return "I'm currently experiencing some technical difficulties, but I'm still here to help! You can:\n\n• Browse your course materials in the Modules section\n• Check your assignments and progress\n• Contact our support team directly\n• Try asking your question again in a few moments\n\nI'll be back online soon! 😊";
+}
+
+// Helper function to retry with exponential backoff
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<T> {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      return await fn();
+    } catch (error: any) {
+      if (attempt === maxRetries - 1) throw error;
+      
+      // Only retry on 429 (quota exceeded) or 503 (service unavailable) errors
+      if (error.status === 429 || error.status === 503) {
+        const delay = baseDelay * Math.pow(2, attempt);
+        console.log(`Retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      } else {
+        throw error;
+      }
+    }
+  }
+  throw new Error('Max retries exceeded');
+}
+
 export async function POST(request: NextRequest) {
   try {
     const { message, conversationHistory = [], pageContext, currentPath } = await request.json();
@@ -195,9 +269,15 @@ CURRENT QUESTION: ${message}
 
 Please provide a helpful response as the Coasted Code AI assistant. Be encouraging and provide specific guidance about the platform when relevant. Consider the student's current page context when giving advice.`;
 
-    // Call Gemini API
-    console.log('Chatbot API - Calling Gemini API...');
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    // Call Gemini API with retry logic
+    console.log('Chatbot API - Calling Gemini API...', {
+      url: GEMINI_API_URL,
+      hasApiKey: !!GEMINI_API_KEY,
+      apiKeyPrefix: GEMINI_API_KEY?.substring(0, 10) + '...'
+    });
+    
+    const response = await retryWithBackoff(async () => {
+      return await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -234,12 +314,41 @@ Please provide a helpful response as the Coasted Code AI assistant. Be encouragi
         ]
       }),
     });
+    });
 
     console.log('Chatbot API - Gemini response status:', response.status);
 
     if (!response.ok) {
       const errorData = await response.text();
-      console.error('Chatbot API - Gemini API error:', errorData);
+      console.error('Chatbot API - Gemini API error:', {
+        status: response.status,
+        statusText: response.statusText,
+        errorData: errorData
+      });
+      
+      // Provide a fallback response for common errors
+      if (response.status === 404) {
+        return NextResponse.json({ 
+          success: false,
+          error: 'AI service temporarily unavailable. Please try again later or contact support.',
+          fallback: true
+        }, { status: 503 });
+      }
+      
+      // Handle quota exceeded (429) errors
+      if (response.status === 429) {
+        // Try to provide a helpful fallback response based on the user's question
+        const fallbackResponse = generateFallbackResponse(message, pageContext);
+        
+        return NextResponse.json({ 
+          success: true,
+          response: fallbackResponse,
+          fallback: true,
+          quotaExceeded: true,
+          timestamp: new Date().toISOString()
+        });
+      }
+      
       return NextResponse.json({ 
         success: false,
         error: `API Error: ${response.status} - ${errorData}` 
