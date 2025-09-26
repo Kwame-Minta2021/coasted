@@ -1,10 +1,12 @@
 'use client'
 import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { usePathname } from 'next/navigation'
 import Logo from './Logo'
-import ThemeToggle from './ThemeToggle'
 import { Menu, X } from 'lucide-react'
+
+// Lazy load ThemeToggle for better performance
+const ThemeToggle = lazy(() => import('./ThemeToggle'))
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -128,7 +130,9 @@ export default function Navbar() {
             </Link>
           </div>
           
-          <ThemeToggle />
+          <Suspense fallback={<div className="w-8 h-8" />}>
+            <ThemeToggle />
+          </Suspense>
           
           {/* Mobile menu button */}
           <button

@@ -55,6 +55,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
+        {/* Preload critical resources */}
+        <link rel="preload" href="/icon.svg" as="image" type="image/svg+xml" />
+        <link rel="preload" href="/logo1.png" as="image" type="image/png" />
+        
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
