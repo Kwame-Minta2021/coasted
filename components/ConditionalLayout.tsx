@@ -1,8 +1,10 @@
 'use client';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import Navbar from '@/components/Navbar';
-import Chatbot from '@/components/Chatbot';
+
+// Lazy load Chatbot for better performance
+const Chatbot = lazy(() => import('@/components/Chatbot'));
 
 interface ConditionalLayoutProps {
   children: React.ReactNode;
@@ -20,7 +22,9 @@ export default function ConditionalLayout({ children }: ConditionalLayoutProps) 
       <>
         {children}
         {/* AI Chatbot - Available on all pages */}
-        <Chatbot isOpen={isChatbotOpen} onToggle={() => setIsChatbotOpen(!isChatbotOpen)} />
+        <Suspense fallback={null}>
+          <Chatbot isOpen={isChatbotOpen} onToggle={() => setIsChatbotOpen(!isChatbotOpen)} />
+        </Suspense>
       </>
     );
   }
@@ -37,7 +41,9 @@ export default function ConditionalLayout({ children }: ConditionalLayoutProps) 
       </main>
 
       {/* AI Chatbot - Available on all pages */}
-      <Chatbot isOpen={isChatbotOpen} onToggle={() => setIsChatbotOpen(!isChatbotOpen)} />
+      <Suspense fallback={null}>
+        <Chatbot isOpen={isChatbotOpen} onToggle={() => setIsChatbotOpen(!isChatbotOpen)} />
+      </Suspense>
     </>
   );
 }

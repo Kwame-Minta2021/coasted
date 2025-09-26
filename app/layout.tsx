@@ -5,7 +5,6 @@ import { ThemeProvider } from '@/components/ThemeProvider'
 import { AuthProvider } from '@/lib/supabase/auth'
 import Script from 'next/script'
 import { generateMetadata as generateSEOMetadata, generateStructuredData } from '@/lib/seo'
-import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 export const metadata: Metadata = {
   ...generateSEOMetadata({
@@ -70,7 +69,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body suppressHydrationWarning>
-        <GoogleAnalytics measurementId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-H2EE34FVLG'} />
         <ThemeProvider>
           <AuthProvider>
             <ConditionalLayout>
@@ -78,9 +76,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             </ConditionalLayout>
           </AuthProvider>
         </ThemeProvider>
-        <script 
+        <Script 
           src="https://js.paystack.co/v1/inline.js" 
-          async
+          strategy="lazyOnload"
         />
       </body>
     </html>
