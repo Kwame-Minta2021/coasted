@@ -222,7 +222,9 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
         aria-label="Open AI Assistant"
         style={{ zIndex: 9999 }}
       >
-        <MessageCircle className="w-7 h-7 group-hover:scale-110 transition-transform" />
+        <div className="group-hover:scale-110 transition-transform">
+          <MessageCircle size={28} />
+        </div>
         <div className="absolute -top-2 -right-2 w-5 h-5 bg-green-400 rounded-full border-2 border-white animate-pulse"></div>
         <span className="absolute -left-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white text-xs px-2 py-1 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
           AI Assistant
@@ -240,7 +242,7 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
         <div className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-white/20 rounded-lg flex items-center justify-center">
-              <Bot className="w-5 h-5" />
+              <Bot size={20} />
             </div>
             <div>
               <h3 className="font-semibold text-sm">AI Assistant</h3>
@@ -253,21 +255,21 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
               className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
               title="Clear conversation"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 size={16} />
             </button>
             <button
               onClick={() => setIsMinimized(!isMinimized)}
               className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
               title={isMinimized ? "Expand" : "Minimize"}
             >
-              {isMinimized ? <Maximize2 className="w-4 h-4" /> : <Minimize2 className="w-4 h-4" />}
+              {isMinimized ? <Maximize2 size={16} /> : <Minimize2 size={16} />}
             </button>
             <button
               onClick={onToggle}
               className="p-1.5 hover:bg-white/20 rounded-lg transition-colors"
               title="Close"
             >
-              <X className="w-4 h-4" />
+              <X size={16} />
             </button>
           </div>
         </div>
@@ -282,8 +284,8 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
                   className={`flex gap-3 ${message.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   {message.role === 'assistant' && (
-                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Bot className="w-4 h-4 text-white" />
+                    <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 text-white">
+                      <Bot size={16} />
                     </div>
                   )}
                   <div
@@ -301,20 +303,22 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
                     </p>
                   </div>
                   {message.role === 'user' && (
-                    <div className="w-8 h-8 bg-gray-300 dark:bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0">
-                      <User className="w-4 h-4 text-gray-600 dark:text-gray-300" />
+                    <div className="w-8 h-8 bg-gray-300 dark:bg-slate-600 rounded-full flex items-center justify-center flex-shrink-0 text-gray-600 dark:text-gray-300">
+                      <User size={16} />
                     </div>
                   )}
                 </div>
               ))}
               {isLoading && (
                 <div className="flex gap-3 justify-start">
-                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Bot className="w-4 h-4 text-white" />
+                  <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full flex items-center justify-center flex-shrink-0 text-white">
+                    <Bot size={16} />
                   </div>
                   <div className="bg-gray-100 dark:bg-slate-700 rounded-2xl px-4 py-3">
                     <div className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin text-blue-600" />
+                      <div className="animate-spin text-blue-600">
+                        <Loader2 size={16} />
+                      </div>
                       <span className="text-sm text-gray-600 dark:text-gray-400">AI is thinking...</span>
                     </div>
                   </div>
@@ -342,14 +346,16 @@ export default function Chatbot({ isOpen, onToggle }: ChatbotProps) {
                   className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-xl transition-all duration-200 flex items-center justify-center disabled:cursor-not-allowed"
                 >
                   {isLoading ? (
-                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <div className="animate-spin">
+                      <Loader2 size={16} />
+                    </div>
                   ) : (
-                    <Send className="w-4 h-4" />
+                    <Send size={16} />
                   )}
                 </button>
               </div>
               <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-                Powered by <Sparkles className="w-3 h-3 inline mx-1" /> Gemini AI
+                Powered by <span className="inline mx-1"><Sparkles size={12} /></span> Gemini AI
               </p>
             </div>
           </>

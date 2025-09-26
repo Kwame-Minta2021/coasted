@@ -1,7 +1,6 @@
 'use client'
 
-import Script from 'next/script'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 interface GoogleAnalyticsProps {
   measurementId: string
@@ -19,58 +18,28 @@ declare global {
 }
 
 export default function GoogleAnalytics({ measurementId }: GoogleAnalyticsProps) {
-  const [isClient, setIsClient] = useState(false)
-
   useEffect(() => {
-    setIsClient(true)
-  }, [])
+    // Load Google Analytics script
+    const script = document.createElement('script')
+    script.async = true
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
+    document.head.appendChild(script)
 
-  useEffect(() => {
-    if (!isClient || typeof window === 'undefined') return
-
-    // Initialize gtag function exactly as Google provides
+    // Initialize gtag
     window.dataLayer = window.dataLayer || []
     window.gtag = window.gtag || function() {
       window.dataLayer.push(arguments)
     }
-
-    // Configure Google Analytics
     window.gtag('js', new Date())
     window.gtag('config', measurementId)
-  }, [measurementId, isClient])
 
-  // Don't render anything on server side
-  if (!isClient) {
-    return null
-  }
+    return () => {
+      // Cleanup
+      document.head.removeChild(script)
+    }
+  }, [measurementId])
 
-  return (
-    <>
-      {/* Google Analytics Script - matches Google's recommended format */}
-      <Script
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
-        onLoad={() => {
-          console.log('Google Analytics script loaded')
-        }}
-        onError={(e) => {
-          console.error('Google Analytics script failed to load:', e)
-        }}
-      />
-      <Script
-        id="google-analytics"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', '${measurementId}');
-          `,
-        }}
-      />
-    </>
-  )
+  return null
 }
 
 // Utility functions for tracking events
@@ -80,30 +49,22 @@ export const trackEvent = (
   label?: string,
   value?: number
 ) => {
-  if (typeof window !== 'undefined' && window.gtag && window.dataLayer) {
-    try {
-      window.gtag('event', action, {
-        event_category: category,
-        event_label: label,
-        value: value,
-      })
-    } catch (error) {
-      console.error('Error tracking event:', error)
-    }
+  if (typeof window !== 'undefined' && window.gtag) {
+    window.gtag('event', action, {
+      event_category: category,
+      event_label: label,
+      value: value,
+    })
   }
 }
 
 export const trackPageView = (url: string, title?: string) => {
-  if (typeof window !== 'undefined' && window.gtag && window.dataLayer) {
-    try {
-      const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-H2EE34FVLG'
-      window.gtag('config', measurementId, {
-        page_title: title || document.title,
-        page_location: url,
-      })
-    } catch (error) {
-      console.error('Error tracking page view:', error)
-    }
+  if (typeof window !== 'undefined' && window.gtag) {
+    const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-H2EE34FVLG'
+    window.gtag('config', measurementId, {
+      page_title: title || document.title,
+      page_location: url,
+    })
   }
 }
 
