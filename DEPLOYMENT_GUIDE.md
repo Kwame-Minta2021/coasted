@@ -448,17 +448,8 @@ const perf = getPerformance(app);
 Configure Google Analytics:
 
 ```javascript
-// In _app.tsx or layout.tsx
-import { GoogleAnalytics } from 'nextjs-google-analytics';
-
-export default function App({ Component, pageProps }) {
-  return (
-    <>
-      <GoogleAnalytics gaMeasurementId={process.env.NEXT_PUBLIC_GA_ID} />
-      <Component {...pageProps} />
-    </>
-  );
-}
+// Analytics can be added later if needed
+// For now, the app is optimized for performance without analytics
 ```
 
 ### 4. Uptime Monitoring
